@@ -16,9 +16,9 @@ function show() {
  const option=(id:string,label:string,active:boolean)=>"<option value=\""+id+"\""+(active?" selected":"")+">"+label+"</option>";
  root.innerHTML=
  "<div class=\"fu-app-shell\"><header class=\"fu-header\"><div class=\"fu-brand\"><span class=\"fu-brand__mark\">"+current.symbol+"</span>"+current.name+"</div>"+
- "<div class=\"fu-row\"><label for=\"theme\">App</label><select class=\"fu-field__control\" id=\"theme\" style=\"width:auto\">"+
- (Object.keys(themes) as Theme[]).map(k=>option(k,themes[k].name.replace("Family ",""),theme===k)).join("")+"</select>"+
- "<label for=\"mode\">Modus</label><select class=\"fu-field__control\" id=\"mode\" style=\"width:auto\">"+option("light","Hell",mode==="light")+option("dark","Dunkel",mode==="dark")+"</select></div></header>"+
+ "<div class=\"fu-toolbar\"><div class=\"fu-toolbar__field\"><label for=\"theme\">App</label><select class=\"fu-field__control\" id=\"theme\">"+
+ (Object.keys(themes) as Theme[]).map(k=>option(k,themes[k].name.replace("Family ",""),theme===k)).join("")+"</select></div>"+
+ "<div class=\"fu-toolbar__field\"><label for=\"mode\">Modus</label><select class=\"fu-field__control\" id=\"mode\">"+option("light","Hell",mode==="light")+option("dark","Dunkel",mode==="dark")+"</select></div></div></header>"+
  "<div class=\"fu-shell-body\"><nav class=\"fu-nav\" aria-label=\"Hauptnavigation\">"+
  current.nav.map((s,i)=>"<button class=\"fu-nav__link\" data-section=\""+i+"\" "+(page===i?"aria-current=\"page\"":"")+"><span class=\"fu-nav__icon\" aria-hidden=\"true\">"+["⌂","▦","☷","⚙"][i]+"</span><span>"+s+"</span></button>").join("")+"</nav>"+
  "<main class=\"fu-content fu-stack\"><div><p class=\"fu-field__hint\">Family UI 0.1.0 · ausschließlich Demo</p><h1>"+current.nav[page]+"</h1><p>Vier Identitäten, ein Designsystem.</p></div>"+
