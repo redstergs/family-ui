@@ -26,3 +26,11 @@ test("playground detail view has an actual back interaction",()=>{
  assert.ok(playground.includes('get<HTMLButtonElement>("detail-back").onclick'));
  assert.ok(playground.includes("detailTrigger?.focus()"));
 });
+
+test("ActionListItem has aligned media and a visible idle click target",()=>{
+ assert.match(css,/\.fu-action-list-item__media \{[^}]*width: 64px;[^}]*height: 56px;/);
+ assert.match(css,/\.fu-action-list-item \{[^}]*border: 1px solid var\(--fu-border\)/);
+ assert.match(css,/\.fu-action-list-item \{[^}]*background: var\(--fu-surface\)/);
+ assert.match(css,/\.fu-action-list-item:hover/);
+ assert.match(css,/\.fu-action-list-item:focus-visible/);
+});
