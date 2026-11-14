@@ -35,10 +35,10 @@ A frameless content section, with a heading and an optional right-side action. A
 
 ## ActionListItem
 
-Use one native `button` for a command or one `a href` for navigation. **The entire row is one interactive target.** Do not nest buttons/links or place a separately actionable checkbox inside it.
+Use one native `button` for a command or one `a href` for navigation. **The entire row is one interactive target**, with a subtle bordered background even in its idle state. Hover, pressed and focus-visible styles emphasize the whole row. Do not nest buttons/links or place a separately actionable checkbox inside it.
 
 Slots (all optional except title):
-- `fu-action-list-item__media`: **leading icon, illustration, cover image, photo, or thumbnail**; absent when no media. Default 48×48 px, optional `--wide` 64×48; `--plain` removes background. The SVG/img is decorative if the title contains its meaning: `aria-hidden="true"` or empty `alt`.
+- `fu-action-list-item__media`: **leading icon, illustration, cover image, photo, or thumbnail**; absent when no media. All media slots reserve the same 64×56 px space (56×52 on extremely narrow screens), so titles align whether the slot contains an icon or an illustration. The optional `--wide` class makes an SVG illustration fill this media slot; `--plain` removes its background. The SVG/img is decorative if the title contains its meaning: `aria-hidden="true"` or empty `alt`.
 - `__body` with `__title` and optional `__meta`.
 - `__status`: e.g. text badge, date, state.
 - `__chevron`: decorative arrow; use `aria-hidden="true"`.
