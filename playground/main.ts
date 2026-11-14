@@ -19,7 +19,7 @@ function show() {
  "<div class=\"fu-toolbar\"><div class=\"fu-toolbar__field\"><label for=\"theme\">App</label><select class=\"fu-field__control\" id=\"theme\">"+
  (Object.keys(themes) as Theme[]).map(k=>option(k,themes[k].name.replace("Family ",""),theme===k)).join("")+"</select></div>"+
  "<div class=\"fu-toolbar__field\"><label for=\"mode\">Modus</label><select class=\"fu-field__control\" id=\"mode\">"+option("light","Hell",mode==="light")+option("dark","Dunkel",mode==="dark")+"</select></div></div></header>"+
- "<div class=\"fu-shell-body\"><nav class=\"fu-nav\" aria-label=\"Hauptnavigation\">"+
+ "<div class=\"fu-shell-body\"><nav class=\"fu-nav\" style=\"--fu-nav-count:"+current.nav.length+"\" aria-label=\"Hauptnavigation\">"+
  current.nav.map((s,i)=>"<button class=\"fu-nav__link\" data-section=\""+i+"\" "+(page===i?"aria-current=\"page\"":"")+"><span class=\"fu-nav__icon\" aria-hidden=\"true\">"+["⌂","▦","☷","⚙"][i]+"</span><span>"+s+"</span></button>").join("")+"</nav>"+
  "<main class=\"fu-content fu-stack\"><div><p class=\"fu-field__hint\">Family UI 0.1.0 · ausschließlich Demo</p><h1>"+current.nav[page]+"</h1><p>Vier Identitäten, ein Designsystem.</p></div>"+
  "<section class=\"fu-panel fu-stack\"><h2>Große Hauptaktion</h2><div style=\"display:flex;justify-content:center\"><button class=\"fu-primary-action\" id=\"action\"><span class=\"fu-primary-action__icon\" aria-hidden=\"true\">"+current.symbol+"</span><span class=\"fu-primary-action__label\">"+current.action+"</span></button></div><p class=\"fu-field__hint\">Keine reale Türsteuerung, API-Verbindung oder Trainingsaktion.</p></section>"+
