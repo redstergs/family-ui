@@ -63,6 +63,31 @@
 .fu-action-list-item:active:not(:disabled) { background: var(--fu-accent-soft); }
 .fu-action-list-item:focus-visible { outline: 3px solid var(--fu-focus); outline-offset: 2px; }
 .fu-action-list-item:disabled, .fu-action-list-item[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+/* Selection variant: use <label> with a native checkbox, never a button
+ * containing an input. The whole label activates the checkbox once. The base
+ * ActionListItem owns typography, height, border, spacing and row treatment. */
+.fu-action-list-item--selection { user-select: none; }
+.fu-action-list-item__checkbox {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--fu-accent);
+  cursor: pointer;
+}
+.fu-action-list-item--selection:has(> .fu-action-list-item__checkbox:checked) {
+  background: var(--fu-accent-soft);
+  border-color: var(--fu-accent-text);
+}
+.fu-action-list-item--selection:has(> .fu-action-list-item__checkbox:focus-visible) {
+  outline: 3px solid var(--fu-focus);
+  outline-offset: 2px;
+}
+.fu-action-list-item--selection:has(> .fu-action-list-item__checkbox:disabled) {
+  opacity: .55;
+  cursor: not-allowed;
+}
+.fu-action-list-item__checkbox:disabled { cursor: not-allowed; }
 /* Optional leading media: icon, image, illustration, or thumbnail. */
 .fu-action-list-item__media {
   flex: 0 0 auto;
