@@ -19,6 +19,14 @@ test("bottom navigation uses bounded, equal-width columns",()=>{
 });
 test("short landscape screens retain bottom navigation",()=>{
   const css=read("../src/components/layout.css");
-  assert.ok(css.includes("(orientation: landscape) and (max-height: 500px) and (max-width: 899px)"));
+  assert.ok(css.includes("(orientation: landscape) and (max-height: 550px) and (max-width: 1200px)"));
   assert.ok(css.includes("position: fixed; inset: auto 0 0"));
+});
+
+test("root and grid content cannot widen the horizontal viewport",()=>{
+ const css=read("../src/components/layout.css");
+ assert.match(css,/html \{[^}]*overflow-x: clip;/);
+ assert.match(css,/body \{[^}]*overflow-x: clip;/);
+ assert.match(css,/\.fu-stack \{[^}]*grid-template-columns: minmax\(0, 1fr\)/);
+ assert.match(css,/\.fu-header \{[^}]*width: 100%/);
 });
