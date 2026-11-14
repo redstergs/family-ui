@@ -30,3 +30,14 @@ test("root and grid content cannot widen the horizontal viewport",()=>{
  assert.match(css,/\.fu-stack \{[^}]*grid-template-columns: minmax\(0, 1fr\)/);
  assert.match(css,/\.fu-header \{[^}]*width: 100%/);
 });
+
+test("consistent SVG icon navigation is used instead of text glyphs",()=>{
+  const icons=read("../src/icons.ts");
+  const playground=read("../playground/main.ts");
+  const layout=read("../src/components/layout.css");
+  assert.ok(icons.includes("viewBox=\\\"0 0 24 24\\\""));
+  assert.ok(icons.includes('aria-hidden="true"'));
+  assert.ok(playground.includes("familyIcon(item.icon)"));
+  assert.ok(playground.includes("familyIcon(current.actionIcon)"));
+  assert.ok(layout.includes(".fu-nav__icon svg"));
+});
