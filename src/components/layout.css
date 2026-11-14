@@ -1,13 +1,13 @@
 * { box-sizing: border-box; }
-html { font-size: 16px; }
-body { margin: 0; }
-.fu-app { background: var(--fu-page); color: var(--fu-text); min-height: 100dvh; line-height: 1.5; }
+html { font-size: 16px; max-width: 100%; }
+body { margin: 0; min-width: 0; max-width: 100%; }
+.fu-app { width: 100%; min-width: 0; max-width: 100%; background: var(--fu-page); color: var(--fu-text); min-height: 100dvh; line-height: 1.5; }
 .fu-app-shell { min-height: 100dvh; display: flex; flex-direction: column; }
-.fu-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; min-height: 64px; border-bottom: 1px solid var(--fu-border); background: var(--fu-surface); }
+.fu-header { min-width: 0; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; min-height: 64px; border-bottom: 1px solid var(--fu-border); background: var(--fu-surface); }
 .fu-brand { display: flex; align-items: center; gap: 10px; min-width: 0; font-size: var(--fu-font-md); font-weight: 750; }
 .fu-brand__mark { width: 38px; height: 38px; flex: none; display: grid; place-items: center; background: var(--fu-accent); color: var(--fu-on-accent); border-radius: var(--fu-radius-control); }
-.fu-shell-body { flex: 1; min-height: 0; }
-.fu-content { width: 100%; max-width: var(--fu-max-content); padding: 24px 16px 106px; margin-inline: auto; }
+.fu-shell-body { flex: 1; min-height: 0; min-width: 0; }
+.fu-content { min-width: 0; width: 100%; max-width: var(--fu-max-content); padding: 24px 16px 106px; margin-inline: auto; }
 .fu-panel { background: var(--fu-surface); border: 1px solid var(--fu-border); padding: 20px; border-radius: var(--fu-radius-panel); }
 .fu-stack { display: grid; gap: var(--fu-space-4); }
 .fu-row { display: flex; align-items: center; gap: var(--fu-space-3); }
@@ -20,14 +20,15 @@ body { margin: 0; }
 .fu-list { display: grid; }
 .fu-list__item { padding: 13px 0; border-bottom: 1px solid var(--fu-border); }
 .fu-list__item:last-child { border-bottom: 0; }
-.fu-nav { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: stretch; justify-content: space-around; z-index: 10; border-top: 1px solid var(--fu-border); background: var(--fu-surface); padding: 7px 8px max(8px, env(safe-area-inset-bottom)); }
+.fu-nav { position: fixed; left: 0; right: 0; bottom: 0; width: 100%; max-width: 100%; min-width: 0; display: grid; grid-template-columns: repeat(var(--fu-nav-count, 4), minmax(0, 1fr)); align-items: stretch; z-index: 10; border-top: 1px solid var(--fu-border); background: var(--fu-surface); padding: 7px 8px max(8px, env(safe-area-inset-bottom)); }
 .fu-nav__link {
   background: none; border: 0; border-radius: var(--fu-radius-control); min-height: var(--fu-target-min);
-  min-width: 0; flex: 1; color: var(--fu-text-muted); padding: 7px 4px; cursor: pointer;
-  display: grid; place-items: center; gap: 2px; font: 550 12px/1.2 system-ui, sans-serif;
+  min-width: 0; width: 100%; max-width: 100%; color: var(--fu-text-muted); padding: 7px 2px; cursor: pointer;
+  display: grid; grid-template-rows: auto auto; place-items: center; align-content: center; gap: 2px; overflow: hidden; overflow-wrap: anywhere; font: 550 12px/1.2 system-ui, sans-serif;
 }
 .fu-nav__link[aria-current="page"] { color: var(--fu-accent-text); background: var(--fu-accent-soft); font-weight: 750; }
 .fu-nav__icon { font-size: 21px; }
+.fu-nav__link span:last-child { display: block; min-width: 0; max-width: 100%; text-align: center; overflow-wrap: anywhere; hyphens: auto; }
 /* Phone header: controls wrap below the brand instead of widening the viewport. */
 @media (max-width: 599px) {
   .fu-header { flex-wrap: wrap; gap: var(--fu-space-3); padding: 12px 16px; }
@@ -42,12 +43,42 @@ body { margin: 0; }
 }
 @media (min-width: 600px) {
   .fu-shell-body { display: grid; grid-template-columns: 76px minmax(0, 1fr); }
-  .fu-nav { position: sticky; top: 0; bottom: auto; height: calc(100dvh - 64px); border-top: 0; border-right: 1px solid var(--fu-border); flex-direction: column; justify-content: flex-start; padding: 16px 6px; gap: 8px; }
-  .fu-nav__link { flex: none; min-height: 56px; }
+  .fu-nav { position: sticky; top: 0; bottom: auto; height: calc(100dvh - 64px); width: 100%; border-top: 0; border-right: 1px solid var(--fu-border); display: flex; flex-direction: column; justify-content: flex-start; padding: 16px 6px; gap: 8px; overflow-y: auto; }
+  .fu-nav__link { flex: none; width: 100%; min-height: 56px; }
   .fu-content { padding: 28px 24px 64px; }
 }
 @media (min-width: 900px) {
   .fu-shell-body { grid-template-columns: 220px minmax(0, 1fr); }
   .fu-nav { align-items: stretch; padding: 16px 10px; }
   .fu-nav__link { display: flex; justify-content: flex-start; padding: 12px; font-size: var(--fu-font-sm); }
+}
+
+/* Short landscape viewports: the rail would consume too much of a phone screen.
+   Keep the bottom bar even when landscape width exceeds the tablet breakpoint. */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 899px) {
+  .fu-shell-body { display: block; }
+  .fu-header { min-height: 0; padding: 8px 12px; gap: 8px; }
+  .fu-brand { font-size: var(--fu-font-base); }
+  .fu-brand__mark { width: 32px; height: 32px; }
+  .fu-toolbar { gap: 6px; }
+  .fu-toolbar__field label { font-size: 12px; }
+  .fu-toolbar__field select { min-height: 40px; padding: 6px; }
+  .fu-nav {
+    position: fixed; inset: auto 0 0; height: auto; width: 100%;
+    display: grid; grid-template-columns: repeat(var(--fu-nav-count, 4), minmax(0, 1fr));
+    overflow: visible; border-right: 0; border-top: 1px solid var(--fu-border);
+    padding: 3px 8px max(3px, env(safe-area-inset-bottom)); gap: 0;
+  }
+  .fu-nav__link { min-height: 44px; padding: 3px 2px; }
+  .fu-nav__icon { font-size: 18px; }
+  .fu-content { padding: 12px 16px 84px; }
+  .fu-primary-action { width: 118px; height: 118px; font-size: 14px; gap: 5px; }
+  .fu-primary-action__icon { font-size: 28px; }
+  .fu-primary-action__label { max-width: 100px; }
+}
+/* Extreme narrow sizes: no fixed label width or horizontal menu overflow. */
+@media (max-width: 360px) {
+  .fu-nav { padding-inline: 3px; }
+  .fu-nav__link { font-size: 10px; padding-inline: 1px; }
+  .fu-content { padding-inline: 12px; }
 }
