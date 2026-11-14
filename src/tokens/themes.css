@@ -1,0 +1,9 @@
+/* Primary accent per application. Use only one theme on an application root. */
+[data-fu-theme="food"] { --fu-accent: #244f42; --fu-accent-soft: #e2efe7; --fu-accent-text: #244f42; }
+[data-fu-theme="door"] { --fu-accent: #965025; --fu-accent-soft: #f8eadd; --fu-accent-text: #965025; }
+[data-fu-theme="mcp"] { --fu-accent: #64509d; --fu-accent-soft: #eee9f8; --fu-accent-text: #64509d; }
+[data-fu-theme="workout"] { --fu-accent: #245f9b; --fu-accent-soft: #e5f0fa; --fu-accent-text: #245f9b; }
+[data-fu-mode="dark"][data-fu-theme="food"] { --fu-accent: #a9dec2; --fu-accent-soft: #273b33; --fu-accent-text: #a9dec2; }
+[data-fu-mode="dark"][data-fu-theme="door"] { --fu-accent: #f1b78a; --fu-accent-soft: #48352a; --fu-accent-text: #f1b78a; }
+[data-fu-mode="dark"][data-fu-theme="mcp"] { --fu-accent: #cbb9ff; --fu-accent-soft: #38334d; --fu-accent-text: #cbb9ff; }
+[data-fu-mode="dark"][data-fu-theme="workout"] { --fu-accent: #a7d1ff; --fu-accent-soft: #293a4d; --fu-accent-text: #a7d1ff; }
