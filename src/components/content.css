@@ -1,0 +1,95 @@
+/* Family UI content composition primitives.
+ * All four are layout/presentation only: no application or routing logic.
+ */
+
+/* PageLayout: use on a main content region; works inside fu-app-shell or alone. */
+.fu-page-layout {
+  min-width: 0;
+  width: 100%;
+  min-height: 100%;
+  background: var(--fu-page);
+  color: var(--fu-text);
+}
+.fu-page-layout__inner {
+  min-width: 0;
+  width: 100%;
+  max-width: var(--fu-max-content);
+  padding: var(--fu-space-6) var(--fu-space-4) 106px;
+  margin-inline: auto;
+}
+.fu-page-layout__header { min-width: 0; margin-bottom: var(--fu-space-6); }
+.fu-page-layout__eyebrow {
+  color: var(--fu-text-muted); font-size: var(--fu-font-xs);
+  font-weight: 650; letter-spacing: .03em;
+}
+.fu-page-layout__title {
+  margin: var(--fu-space-1) 0 var(--fu-space-2);
+  color: var(--fu-text); font-size: clamp(24px, 4vw, var(--fu-font-xl));
+  font-weight: 750; line-height: 1.2; overflow-wrap: anywhere;
+}
+.fu-page-layout__intro { margin: 0; color: var(--fu-text-muted); font-size: var(--fu-font-base); }
+
+/* Section: a semantic grouping, intentionally frameless by default. */
+.fu-section { min-width: 0; margin-block: var(--fu-space-6); }
+.fu-section:first-child { margin-top: 0; }
+.fu-section__header {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: var(--fu-space-2) var(--fu-space-4);
+  margin-bottom: var(--fu-space-3);
+}
+.fu-section__title {
+  margin: 0; color: var(--fu-text); font-size: var(--fu-font-lg);
+  font-weight: 700; line-height: 1.3;
+}
+.fu-section__description { margin: 4px 0 0; color: var(--fu-text-muted); font-size: var(--fu-font-sm); }
+.fu-section__body { min-width: 0; }
+.fu-section__action { margin-left: auto; }
+
+/* ActionListItem: a single interactive anchor/button per row.
+ * The complete item is the target; don't nest links or controls inside it.
+ */
+.fu-action-list { display: grid; min-width: 0; }
+.fu-action-list__item + .fu-action-list__item { border-top: 1px solid var(--fu-border); }
+.fu-action-list-item {
+  display: flex; align-items: center; width: 100%; min-width: 0;
+  min-height: 56px; gap: var(--fu-space-3);
+  border: 0; border-radius: var(--fu-radius-control);
+  background: transparent; color: var(--fu-text);
+  font: inherit; text-align: left; text-decoration: none;
+  padding: var(--fu-space-3) var(--fu-space-2); cursor: pointer;
+}
+.fu-action-list-item:hover:not(:disabled) { background: var(--fu-surface-soft); }
+.fu-action-list-item:focus-visible { outline: 3px solid var(--fu-focus); outline-offset: -3px; }
+.fu-action-list-item:disabled, .fu-action-list-item[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.fu-action-list-item__body { display: grid; gap: 2px; flex: 1 1 auto; min-width: 0; }
+.fu-action-list-item__title { font-size: var(--fu-font-base); font-weight: 650; line-height: 1.3; overflow-wrap: anywhere; }
+.fu-action-list-item__meta { color: var(--fu-text-muted); font-size: var(--fu-font-sm); line-height: 1.4; overflow-wrap: anywhere; }
+.fu-action-list-item__status { flex: 0 1 auto; color: var(--fu-text-muted); font-size: var(--fu-font-sm); text-align: right; }
+.fu-action-list-item__chevron { flex: 0 0 auto; color: var(--fu-text-muted); font-size: 22px; line-height: 1; }
+.fu-action-list-item__chevron svg { display: block; width: 20px; height: 20px; }
+
+/* DetailView: heading/meta/actions/content layout; no implicit card or overlay. */
+.fu-detail-view { width: 100%; min-width: 0; }
+.fu-detail-view__back { display: inline-flex; align-items: center; min-height: 44px; gap: var(--fu-space-2); margin-bottom: var(--fu-space-3); }
+.fu-detail-view__header { min-width: 0; margin-bottom: var(--fu-space-6); }
+.fu-detail-view__title {
+  margin: 0 0 var(--fu-space-2);
+  font-size: clamp(24px, 4vw, var(--fu-font-xl)); line-height: 1.2;
+  font-weight: 750; overflow-wrap: anywhere;
+}
+.fu-detail-view__meta { display: flex; flex-wrap: wrap; gap: var(--fu-space-2) var(--fu-space-4); color: var(--fu-text-muted); font-size: var(--fu-font-sm); }
+.fu-detail-view__summary { max-width: 72ch; margin: var(--fu-space-3) 0 0; line-height: 1.6; }
+.fu-detail-view__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fu-space-2); margin-top: var(--fu-space-4); }
+.fu-detail-view__body { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--fu-space-4); min-width: 0; }
+.fu-detail-view__body > * { min-width: 0; }
+
+@media (min-width: 600px) {
+  .fu-page-layout__inner { padding: 28px var(--fu-space-6) 64px; }
+}
+@media (orientation: landscape) and (max-height: 550px) and (max-width: 1200px) {
+  .fu-page-layout__inner { padding: var(--fu-space-3) var(--fu-space-4) 84px; }
+}
+@media (max-width: 359px) {
+  .fu-page-layout__inner { padding-inline: var(--fu-space-3); }
+  .fu-action-list-item__status { max-width: 30%; }
+}
