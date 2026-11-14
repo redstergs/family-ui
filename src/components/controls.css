@@ -34,6 +34,7 @@
   border: 1px solid var(--fu-border-strong); border-radius: var(--fu-radius-control);
   padding: 11px 12px; font-family: inherit; font-size: 16px;
 }
+.fu-field__control:focus::placeholder { color: transparent; }
 textarea.fu-field__control { resize: vertical; }
 .fu-field__control[aria-invalid="true"] { border: 2px solid var(--fu-danger); }
 .fu-field__control:disabled { opacity: .65; background: var(--fu-surface-soft); cursor: not-allowed; }
