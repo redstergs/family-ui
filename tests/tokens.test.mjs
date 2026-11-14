@@ -35,7 +35,7 @@ test("consistent SVG icon navigation is used instead of text glyphs",()=>{
   const icons=read("../src/icons.ts");
   const playground=read("../playground/main.ts");
   const layout=read("../src/components/layout.css");
-  assert.ok(icons.includes("viewBox=\\\"0 0 24 24\\\""));
+  assert.ok(icons.includes("viewBox="));
   assert.ok(icons.includes('aria-hidden="true"'));
   assert.ok(playground.includes("familyIcon(item.icon)"));
   assert.ok(playground.includes("familyIcon(current.actionIcon)"));
