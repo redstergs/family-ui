@@ -35,7 +35,12 @@ A frameless content section, with a heading and an optional right-side action. A
 
 ## ActionListItem
 
-Use one native `button` for a command or one `a href` for navigation. **The entire row is one interactive target**, with a subtle bordered background even in its idle state. Hover, pressed and focus-visible styles emphasize the whole row. Do not nest buttons/links or place a separately actionable checkbox inside it.
+Two presentation variants share **the same typography, minimum height, padding, border, radius, list spacing and separators**. Both have a full-width interactive row with clear idle, hover and focus states.
+
+- **Navigation (existing/default):** a native `button` for a command or an `a href` for navigation. One click opens the chosen detail view. Do not nest another button, link or checkbox.
+- **Selection (new):** `label.fu-action-list-item.fu-action-list-item--selection` with a direct child native `input[type=checkbox].fu-action-list-item__checkbox`. The entire label toggles that checkbox, including its title and metadata. A checked checkbox gets a subtle accent background and border using CSS `:has()`. Native Space-key activation, tab focus, checked state, and form submission remain intact. Never wrap a separate button around the checkbox or add custom row click handlers that would cause double toggles.
+
+The component only styles the checkbox: application state, bulk actions, selection limits and saving remain in the host application.
 
 Slots (all optional except title):
 - `fu-action-list-item__media`: **leading icon, illustration, cover image, photo, or thumbnail**; absent when no media. All media slots reserve the same 64×56 px space (56×52 on extremely narrow screens), so titles align whether the slot contains an icon or an illustration. The optional `--wide` class makes an SVG illustration fill this media slot; `--plain` removes its background. The SVG/img is decorative if the title contains its meaning: `aria-hidden="true"` or empty `alt`.
@@ -58,6 +63,25 @@ Slots (all optional except title):
   </div>
 </div>
 ```
+
+### Selection example
+
+```html
+<div class="fu-action-list" role="group" aria-label="Gerichte auswählen">
+  <div class="fu-action-list__item">
+    <label class="fu-action-list-item fu-action-list-item--selection">
+      <input class="fu-action-list-item__checkbox"
+             type="checkbox" name="meal" value="gnocchi">
+      <span class="fu-action-list-item__body">
+        <span class="fu-action-list-item__title">Kürbis-Gnocchi</span>
+        <span class="fu-action-list-item__meta">60 Minuten · 3 Personen</span>
+      </span>
+    </label>
+  </div>
+</div>
+```
+
+No chevron in the Selection variant: clicking selects, it does not open a detail view. An optional decorative media slot can follow the checkbox; the title, meta, status and list presentation use the same classes as in Navigation.
 
 For a photograph, replace the icon content with `<img src="..." alt="">`; provide meaningful alt text only if it conveys essential information not stated in the title. If you include a meaningful image, do not hide the wrapper from accessibility APIs.
 
