@@ -34,3 +34,20 @@ test("ActionListItem has aligned media and a visible idle click target",()=>{
  assert.match(css,/\.fu-action-list-item:hover/);
  assert.match(css,/\.fu-action-list-item:focus-visible/);
 });
+
+test("selection rows inherit the same ActionListItem sizing and typography",()=>{
+ assert.match(css,/\.fu-action-list-item--selection \{/);
+ assert.match(css,/\.fu-action-list-item__checkbox \{/);
+ assert.match(css,/\.fu-action-list-item--selection:has\(> \.fu-action-list-item__checkbox:checked\)/);
+ assert.match(css,/\.fu-action-list-item--selection:has\(> \.fu-action-list-item__checkbox:focus-visible\)/);
+ assert.match(css,/\.fu-action-list-item \{[^}]*min-height: 76px;/);
+ assert.match(css,/\.fu-action-list \{[^}]*gap: var\(--fu-space-2\)/);
+ assert.ok(!css.includes(".fu-action-list-item--selection .fu-action-list-item__title"));
+});
+test("playground renders two independent selection checkboxes with native label targets",()=>{
+ assert.ok(playground.includes('class=\\"fu-action-list-item fu-action-list-item--selection\\"'));
+ assert.ok(playground.includes('type=\\"checkbox\\" name=\\"demo-selection\\"'));
+ assert.ok(playground.includes("selectedInputs.filter(i=>i.checked)"));
+ assert.ok(playground.includes('addEventListener("change",updateSelected)'));
+ assert.ok(playground.includes("data-open-detail"));
+});
