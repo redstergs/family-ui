@@ -61,6 +61,27 @@
 .fu-action-list-item:hover:not(:disabled) { background: var(--fu-surface-soft); }
 .fu-action-list-item:focus-visible { outline: 3px solid var(--fu-focus); outline-offset: -3px; }
 .fu-action-list-item:disabled, .fu-action-list-item[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+/* Optional leading media: icon, image, illustration, or thumbnail. */
+.fu-action-list-item__media {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--fu-radius-control);
+  background: var(--fu-surface-soft);
+  color: var(--fu-accent-text);
+}
+.fu-action-list-item__media--plain { background: transparent; }
+.fu-action-list-item__media svg { width: 24px; height: 24px; display: block; }
+.fu-action-list-item__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fu-action-list-item__media--wide { width: 64px; }
 .fu-action-list-item__body { display: grid; gap: 2px; flex: 1 1 auto; min-width: 0; }
 .fu-action-list-item__title { font-size: var(--fu-font-base); font-weight: 650; line-height: 1.3; overflow-wrap: anywhere; }
 .fu-action-list-item__meta { color: var(--fu-text-muted); font-size: var(--fu-font-sm); line-height: 1.4; overflow-wrap: anywhere; }
