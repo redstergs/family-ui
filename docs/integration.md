@@ -17,6 +17,7 @@ Family UI is **build-time-only**. No cross-product runtime scripts, shared servi
 2. Upgrade the pin and keep the previous revision available for rollback.
 3. Set `data-fu-theme` to `food`, `mcp`, `workout` or `door` and `data-fu-mode` to `light` or `dark` on the same `.fu-app` root.
 4. Adopt revised layout, toolbar and ActionList modifiers intentionally; reuse existing Panel/Card and other primitives. See [migration-0.2.md](migration-0.2.md) and [layout-revision.md](layout-revision.md).
+   For optional workspace components, see [workspace.md](workspace.md). Timer behavior and wake locks remain consumer responsibilities.
 5. Keep application data, permissions, routing, date calculations, validation, confirmation and persistence in the consuming application.
 6. Test mobile and desktop layouts, Light and Dark modes, long content, keyboard operation, contrast, disabled/selected states and application-specific regressions. Shared CI does not certify every consumer or full WCAG compliance.
 7. Deploy the consumer independently after its own checks. If required, roll back the dependency pin and related markup together.
