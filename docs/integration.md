@@ -4,10 +4,10 @@ Family UI is **build-time-only**. No cross-product runtime scripts, shared servi
 
 ## Distribution and versioning
 
-- The current library version is **0.2.0**. Use the GitHub release tag `v0.2.0` once it exists; never consume floating `main` in a production build.
+- The current library version is **0.3.0**. Use the GitHub release tag `v0.3.0` once it exists; never consume floating `main` in a production build.
 - The GitHub repository is public, but the package remains marked `private: true` to prevent accidental npm registry publication. No npm registry release is required.
 - Each consumer pins a release or exact commit in its existing build-time dependency mechanism and records the resolved revision in its lockfile or equivalent manifest.
-- For consumers using npm, an example is `npm install github:redstergs/family-ui#v0.2.0`. Existing vendoring/build mechanisms may be retained if they pin the same release and preserve the CSS import structure.
+- For consumers using npm, an example is `npm install github:redstergs/family-ui#v0.3.0`. Existing vendoring/build mechanisms may be retained if they pin the same release and preserve the CSS import structure.
 - Import `@redstergs/family-ui` for the complete stylesheet; `@redstergs/family-ui/tokens` and `@redstergs/family-ui/components` are available separately. When using only the components entry point, ensure foundation/theme tokens are also loaded.
 - Build the CSS into the consumer's own assets. Do not load styles from the live showcase or a mutable remote URL.
 
@@ -26,7 +26,7 @@ Family UI is **build-time-only**. No cross-product runtime scripts, shared servi
 
 Development may proceed directly on `main`. GitHub Actions runs on every push and supports manual dispatch. It uses Node.js 22 on Ubuntu 24.04, performs TypeScript checks, static tests, production build and Chromium browser tests before publishing the showcase to GitHub Pages.
 
-The current release job creates `v0.2.0` only once and only after successful build and deployment. It does not overwrite existing releases. For future versions, update the package version, changelog, migration notes and release-job version condition deliberately. Use SemVer and document breaking changes explicitly.
+The current release job creates `v0.3.0` only once and only after successful build and deployment. It does not overwrite existing releases. For future versions, update the package version, changelog, migration notes and release-job version condition deliberately. Use SemVer and document breaking changes explicitly.
 
 The [public showcase](https://redstergs.github.io/family-ui/) tracks successful deployments from `main`; it is not an immutable release artifact and is not the consumer dependency source. Library deployment never triggers a consumer migration.
 
