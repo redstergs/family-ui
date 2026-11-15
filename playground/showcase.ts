@@ -1,4 +1,5 @@
 import "./showcase.css";
+import { phaseTwoExamples, bindPhaseTwo } from "./phase-two";
 
 type Options = {getTheme:()=>string; getMode:()=>string};
 export function installShowcase(app: HTMLElement, options: Options) {
@@ -9,8 +10,8 @@ export function installShowcase(app: HTMLElement, options: Options) {
     <div class="fu-showcase__controls">
       <label>Theme <select id="showcase-theme" class="fu-field__control"><option value="food">Food</option><option value="door">Door</option><option value="mcp">MCP</option><option value="workout">Workout</option></select></label>
       <label>Modus <select id="showcase-mode" class="fu-field__control"><option value="light">Light</option><option value="dark">Dark</option></select></label>
-      <label>Vorschau <select id="showcase-size" class="fu-field__control"><option value="100%">Verfügbare Breite</option><option value="390px">Smartphone (390 px)</option><option value="768px">Tablet (768 px)</option><option value="1280px">Desktop (1280 px)</option></select></label>
-      <label>Bereich <select id="showcase-section" class="fu-field__control"><option value="foundation">Foundation</option><option value="layout">Layout</option><option value="components">Komponenten</option></select></label>
+      <label>Vorschau <select id="showcase-size" class="fu-field__control"><option value="100%">Verfügbare Breite</option><option value="320px">Schmal (320 px)</option><option value="390px">Smartphone (390 px)</option><option value="768px">Tablet (768 px)</option><option value="1280px">Desktop (1280 px)</option></select></label>
+      <label>Bereich <select id="showcase-section" class="fu-field__control"><option value="foundation">Foundation</option><option value="layout">Layout</option><option value="components">Bestehende Komponenten</option><option value="action-list">ActionList</option><option value="cards">Cards &amp; Hero</option><option value="feedback">Status &amp; EmptyState</option><option value="planning">Tabellen &amp; Zeitraum</option></select></label>
     </div>
     <iframe title="Family UI responsive Komponenten-Vorschau" class="fu-showcase__preview" id="showcase-frame"></iframe>
   </div>`;
@@ -28,9 +29,10 @@ export function installShowcase(app: HTMLElement, options: Options) {
     const header=`<header class="fu-page-layout__header"><div class="fu-page-layout__heading"><p class="fu-page-layout__eyebrow">Family UI · Showcase</p><h1 class="fu-page-layout__title">Übersicht mit längerem Seitentitel</h1><p class="fu-page-layout__intro">Beschreibung und responsive Aktionen</p></div><div class="fu-page-layout__actions"><button class="fu-button">Neu</button><button class="fu-button fu-button--secondary">Optionen</button></div></header>`;
     const layout=["narrow","default","wide"].map(w=>`<main class="fu-page-layout fu-page-layout--revised fu-page-layout--${w}"><div class="fu-page-layout__inner">${header}<section class="fu-section"><div class="fu-section__header"><div><h2 class="fu-section__title">Abschnitt · ${w}</h2><p class="fu-section__description">Abschnitt ohne Kartenrahmen</p></div><button class="fu-button fu-button--secondary fu-section__action">Alle anzeigen</button></div>${toolbar}<p>Beispielinhalt mit einem längeren Text, der auch auf schmalen Bildschirmen korrekt umbrechen muss.</p></section></div></main>`).join("<hr>");
     const components=`<section class="fu-section"><h2 class="fu-section__title">Bestehende Komponenten</h2><div class="fu-stack"><div class="fu-row" style="flex-wrap:wrap"><button class="fu-button">Primär</button><button class="fu-button fu-button--secondary">Sekundär</button><button class="fu-button" disabled>Disabled</button></div><div class="fu-action-list"><button class="fu-action-list-item"><span class="fu-action-list-item__body"><span class="fu-action-list-item__title">Navigation mit langem Titel</span><span class="fu-action-list-item__meta">Metadaten</span></span><span class="fu-action-list-item__chevron">›</span></button><label class="fu-action-list-item fu-action-list-item--selection"><input class="fu-action-list-item__checkbox" type="checkbox" checked><span class="fu-action-list-item__body">Ausgewählt</span></label><button class="fu-action-list-item" disabled>Deaktiviert</button></div><div class="fu-panel">Informative Oberfläche</div><span class="fu-status fu-status--success">Erfolg</span></div></section>`;
-    const body=section.value==="layout"?layout:'<main class="fu-page-layout fu-page-layout--revised"><div class="fu-page-layout__inner">'+(section.value==="foundation"?foundation:components)+'</div></main>';
+    const body=section.value==="layout"?layout:'<main class="fu-page-layout fu-page-layout--revised"><div class="fu-page-layout__inner">'+(section.value==="foundation"?foundation:section.value==="components"?components:phaseTwoExamples(section.value))+'</div></main>';
     frame.srcdoc='<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+links+css+'<style>.samples{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:12px}.sample{min-width:0}.swatch{height:40px;border:1px solid var(--fu-border);border-radius:8px}.sample code{overflow-wrap:anywhere}hr{border:0;border-top:1px solid var(--fu-divider)}.fu-page-layout--revised{min-height:0}</style></head><body><div class="fu-app" data-fu-theme="'+theme.value+'" data-fu-mode="'+mode.value+'">'+body+'</div></body></html>';
   }
+  frame.addEventListener("load",()=>{if(frame.contentDocument) bindPhaseTwo(frame.contentDocument);});
   toggle.onclick=()=>{
     const open=panel.hidden;
     panel.hidden=!open; app.hidden=open; toggle.setAttribute("aria-expanded",String(open));
