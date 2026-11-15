@@ -144,3 +144,39 @@
   .fu-action-list-item__media { width: 56px; height: 52px; }
   .fu-action-list-item__status { max-width: 30%; }
 }
+
+/* Opt-in revised composition; legacy markup remains unchanged. */
+.fu-page-layout--narrow { --fu-layout-width: var(--fu-content-narrow); }
+.fu-page-layout--wide { --fu-layout-width: var(--fu-content-wide); }
+.fu-page-layout--revised .fu-page-layout__inner {
+  max-width: var(--fu-layout-width, var(--fu-max-content));
+  padding: var(--fu-page-top) var(--fu-page-gutter) var(--fu-page-bottom);
+  display: grid; gap: var(--fu-section-gap); grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+}
+.fu-page-layout--revised .fu-page-layout__inner > * { min-width: 0; margin-block: 0; }
+.fu-page-layout--revised .fu-page-layout__header {
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between;
+  gap: var(--fu-space-3) var(--fu-space-4);
+}
+.fu-page-layout__heading { flex: 1 1 240px; min-width: 0; }
+.fu-page-layout__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fu-space-2); min-width: 0; }
+.fu-page-layout--revised .fu-page-layout__eyebrow { margin: 0 0 var(--fu-space-1); }
+.fu-page-layout--revised .fu-page-layout__title { margin: 0 0 var(--fu-space-2); font-weight: var(--fu-weight-heading); line-height: var(--fu-leading-heading); }
+.fu-page-layout--revised .fu-section__header { align-items: flex-start; }
+.fu-page-layout--revised .fu-section__header > * { min-width: 0; overflow-wrap: anywhere; }
+.fu-page-layout--revised .fu-section__action { margin-left: 0; }
+.fu-page-layout--revised .fu-section__body > .fu-section { margin-block: var(--fu-section-gap); }
+.fu-toolbar.fu-toolbar--content {
+  display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: end;
+  width: 100%; gap: var(--fu-space-2) var(--fu-space-3);
+}
+.fu-toolbar--content .fu-toolbar__field { display: grid; flex: 0 1 auto; min-width: 0; }
+.fu-toolbar--content .fu-toolbar__field--grow { flex: 1 1 180px; }
+.fu-toolbar--content .fu-field__control { width: 100%; }
+.fu-toolbar--content .fu-button, .fu-toolbar--content .fu-field__control { min-height: var(--fu-control-height); }
+.fu-toolbar--compact .fu-button, .fu-toolbar--compact .fu-field__control { min-height: var(--fu-control-height-compact); padding-block: 6px; }
+@media (max-width: 599px) {
+  .fu-page-layout--revised .fu-page-layout__actions { width: 100%; }
+  .fu-toolbar--content .fu-toolbar__field { flex: 1 1 130px; }
+}
