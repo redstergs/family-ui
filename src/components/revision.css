@@ -82,3 +82,17 @@
 .fu-table__action:active:not(:disabled) { background: var(--fu-surface-selected, var(--fu-accent-soft)); }
 .fu-table__action:focus-visible { outline-offset: -3px; }
 .fu-table__action:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Keep disabled rows inert visually even when hovered, and use a stronger
+   idle outline where the border conveys the interactive affordance. */
+.fu-action-list--revised .fu-action-list-item,
+.fu-panel--interactive, .fu-table__action {
+  --fu-border-interactive: var(--fu-border-action, var(--fu-border-strong));
+}
+.fu-action-list--revised .fu-action-list-item:is(:disabled,[aria-disabled="true"],:has(input:disabled)):hover,
+.fu-action-list--revised .fu-action-list-item:is(:disabled,[aria-disabled="true"],:has(input:disabled)):active {
+  border-color: var(--fu-border-interactive);
+}
+.fu-action-list--revised .fu-action-list-item--selection:has(> input:checked:disabled) {
+  border-color: var(--fu-border-selected, var(--fu-accent-text));
+}
