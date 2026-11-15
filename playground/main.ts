@@ -1,4 +1,5 @@
 import "../src/index.css";
+import { installShowcase } from "./showcase";
 import { familyIcon, type FamilyIconName } from "../src/icons";
 type Theme = "food" | "door" | "mcp" | "workout";
 type Mode = "light" | "dark";
@@ -59,3 +60,4 @@ function show() {
  }
 }
 show();
+installShowcase(root, { getTheme:()=>theme, getMode:()=>mode });
