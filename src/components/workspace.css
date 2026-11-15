@@ -1,0 +1,28 @@
+/* Presentation-only workspace primitives. Consumer owns focus, routing and state. */
+.fu-workspace { position: fixed; inset: 0; z-index: 100; display: grid; grid-template-rows: auto minmax(0,1fr) auto; height: 100dvh; min-height: 0; background: var(--fu-page); color: var(--fu-text); overflow: hidden; }
+.fu-workspace__header,.fu-workspace__footer { min-width: 0; background: var(--fu-surface); padding: var(--fu-space-3) var(--fu-space-4); }
+.fu-workspace__header { border-bottom: 1px solid var(--fu-border); padding-top: max(var(--fu-space-3),env(safe-area-inset-top)); }
+.fu-workspace__footer { border-top: 1px solid var(--fu-border); padding-bottom: max(var(--fu-space-3),env(safe-area-inset-bottom)); max-height: 40dvh; overflow: auto; }
+.fu-workspace__body { min-height: 0; min-width: 0; overflow: auto; }
+.fu-workspace [hidden] { display: none !important; }
+.fu-split-layout { display: grid; grid-template-columns: minmax(0,1fr); min-height: 0; height: 100%; }
+.fu-split-layout__pane { min-width: 0; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: var(--fu-space-3); }
+.fu-split-layout__pane[data-active="false"] { display: none; }
+.fu-tabs { display: flex; gap: var(--fu-space-2); }
+.fu-tabs > button { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.fu-tabs > [aria-selected="true"] { background: var(--fu-accent-soft); color: var(--fu-accent-text); border-color: var(--fu-accent-text); }
+@media (min-width: 768px) {
+  .fu-split-layout { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .fu-split-layout--1-2 { grid-template-columns: minmax(0,1fr) minmax(0,2fr); }
+  .fu-split-layout__pane[data-active="false"] { display: block; }
+  .fu-split-layout__pane + .fu-split-layout__pane { border-inline-start: 1px solid var(--fu-border); }
+  .fu-tabs--split { display: none; }
+}
+.fu-progress { width: 100%; height: 6px; accent-color: var(--fu-accent); }
+.fu-timer-bar { display: flex; flex-wrap: wrap; gap: var(--fu-space-2); }
+.fu-timer { flex: 1 1 160px; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--fu-space-2); padding: var(--fu-space-2); background: var(--fu-surface-soft); border: 1px solid var(--fu-border); border-radius: var(--fu-radius-control); }
+.fu-timer__name { flex: 1 1 100%; overflow-wrap: anywhere; }
+.fu-timer__value { font-size: var(--fu-font-lg); font-weight: var(--fu-weight-semibold); font-variant-numeric: tabular-nums; }
+.fu-timer[data-state="expired"] { border-color: var(--fu-warning); }
+.fu-duration-picker { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: var(--fu-space-2); align-items: center; }
+.fu-duration-picker__value { font-variant-numeric: tabular-nums; text-align: center; }
