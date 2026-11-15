@@ -28,6 +28,10 @@ jobs:
         run: npm test
       - name: Build
         run: npm run build
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser tests
+        run: npm run test:browser
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -45,3 +49,20 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  release:
+    needs: [build, deploy]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish tested 0.2.0 release once
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "$version" != "0.2.0" ]; then exit 0; fi
+          if gh release view "v$version" >/dev/null 2>&1; then exit 0; fi
+          gh release create "v$version" --target "$GITHUB_SHA" --title "Family UI $version" --notes "Layout revision: tested foundation, components and showcase. See CHANGELOG.md and docs/migration-0.2.md for details."
