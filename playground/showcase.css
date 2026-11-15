@@ -1,0 +1,6 @@
+.fu-showcase { background:#f7f8f6; color:#202b2a; padding:12px; --fu-accent:#244f42; }
+.fu-showcase__switch { display:flex; justify-content:flex-end; }
+.fu-showcase__controls { display:flex; flex-wrap:wrap; gap:12px; padding-block:16px; }
+.fu-showcase__controls label { display:grid; gap:4px; flex:1 1 140px; min-width:0; }
+.fu-showcase__preview { display:block; max-width:100%; margin:auto; border:1px solid #84978e; height:78dvh; background:#fff; }
+.fu-showcase [hidden], #app[hidden] { display:none !important; }
