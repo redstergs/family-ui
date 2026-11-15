@@ -4,7 +4,7 @@
 .fu-workspace__header { border-bottom: 1px solid var(--fu-border); padding-top: max(var(--fu-space-3),env(safe-area-inset-top)); }
 .fu-workspace__footer { border-top: 1px solid var(--fu-border); padding-bottom: max(var(--fu-space-3),env(safe-area-inset-bottom)); max-height: 40dvh; overflow: auto; }
 .fu-workspace__body { min-height: 0; min-width: 0; overflow: auto; }
-.fu-workspace [hidden] { display: none !important; }
+.fu-workspace[hidden], .fu-workspace [hidden] { display: none !important; }
 .fu-split-layout { display: grid; grid-template-columns: minmax(0,1fr); min-height: 0; height: 100%; }
 .fu-split-layout__pane { min-width: 0; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: var(--fu-space-3); }
 .fu-split-layout__pane[data-active="false"] { display: none; }
