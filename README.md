@@ -7,42 +7,73 @@ Shared, framework-independent design foundations for four independent family app
 - **Family MCP** — personal integrations and administration
 - **Family Workout** — training
 
-**Julia's English Quest is intentionally excluded.** This repository contains *presentation only*: no accounts, database, shared application state, access policy, door-control commands or domain business logic.
+Other applications are outside the current scope. Family UI contains presentation only: no accounts, databases, shared application state, access policy, door-control commands or domain business logic.
 
 ## Status
 
-Initial development foundation **0.1.0**. No existing application imports this package yet. Themes and examples are proposals to validate before rollout. This is not a stable 1.0 release.
+**Version 0.2.0 — layout revision.** Both design phases have been accepted and the automated test run has passed. This is a pre-1.0 library, not a promise of permanent API stability. Existing consumers upgrade independently; the revision does not automatically migrate any application.
+
+- [Live component showcase](https://redstergs.github.io/family-ui/)
+- [GitHub releases](https://github.com/redstergs/family-ui/releases)
+- [Changelog](CHANGELOG.md)
+- [Integration contract](docs/integration.md)
+- [Migration to 0.2.0](docs/migration-0.2.md)
+- [Layout and component contracts](docs/layout-revision.md)
 
 ## Get started
+
+Use Node.js 22.
 
 ```sh
 npm install
 npm run dev
-npm run build
+npm run check
 npm test
+npm run build
+npx playwright install --with-deps chromium
+npm run test:browser
 ```
 
-The Vite playground is a standalone demo. All interactions are simulated locally; no backend calls or physical door actions exist.
+On Linux, the CI environment uses Ubuntu 24.04 LTS. On other supported systems, use the appropriate Playwright browser installation instructions. Browser tests run against the built site. The Vite playground is a standalone demo; all interactions are simulated locally and no backend calls or physical door actions exist.
+
+Open the component catalog to switch among four themes, Light and Dark modes, and responsive preview widths. The existing example pages remain available.
+
+## Components
+
+| Area | Building blocks |
+| --- | --- |
+| Foundation | Semantic color, typography, spacing, sizing, focus and surface tokens |
+| Layout | AppShell, PageLayout (default/narrow/wide), PageHeader, Section, Toolbar, DetailView |
+| Lists | ActionList navigation and native checkbox selection, revised/compact/aligned variants, optional media and separate actions |
+| Cards | Panel/Card, interactive and compact variants, CardGrid, optional HeroCard |
+| Planning | PeriodNavigator, native Table, interactive cells and contained scrolling |
+| Feedback | StatusBadge, EmptyState, Banner, Dialog, Toast |
+| Controls | Existing buttons, fields, navigation and PrimaryAction |
+
+New composition and list styling is opt-in where documented; existing CSS entry points and selectors remain available.
 
 ## Architecture
 
-- `src/tokens/`: semantic CSS custom properties for foundation, colors, sizes, and themes.
+- `src/tokens/`: semantic CSS custom properties, foundations and four application themes.
 - `src/components/`: framework-independent CSS building blocks.
-- `src/index.css`: stable CSS entry point.
-- `playground/`: TypeScript and HTML sample UI (not a production app).
-- `docs/`: design rules, accessibility, integration and release guidelines.
-- `tests/`: dependency-light token and contrast checks.
+- `src/index.css`: shared CSS entry point; token-only and component-only exports are also available.
+- `playground/`: simulated TypeScript and HTML showcase.
+- `docs/`: design, accessibility, integration and migration guidance.
+- `tests/`: static contracts, token/contrast checks and Chromium browser tests.
 
-Four applications remain independent at runtime and adopt **pinned releases** when integrations are approved. No runtime CDN or central service.
+Applications adopt pinned versions at build time. No runtime CDN, shared service or central application backend is required.
 
 ## Principles
 
-1. Mobile first: bottom navigation on phone, side navigation on tablet / desktop; actual breakpoints require testing in each app.
-2. Clear typography, restrained surfaces, minimal nesting and visible status.
-3. Large 148px circular `PrimaryAction` for a single prominent action, modeled after Family Door; **visual only** here. Safety checks and the real ten-second door-latch confirmation stay inside Family Door.
-4. Visible form labels and errors, keyboard focus, touch targets and reduced-motion support.
-5. Contrast targets: 4.5:1 normal text, 3:1 large text and essential graphical controls.
+1. Mobile first: bottom navigation on phones, side navigation on larger screens; check breakpoints in each consumer.
+2. Clear typography, restrained surfaces, minimal nesting, consistent alignment and visible interaction targets in their resting state.
+3. Prefer native semantic elements; never nest interactive controls. Provide visible labels, keyboard focus, touch targets and reduced-motion support.
+4. Images are optional. Reflow content instead of shrinking it; contain wide table scrolling.
+5. Contrast targets: 4.5:1 normal text and 3:1 large text and essential graphical controls. Automated checks complement, but do not replace, manual accessibility review.
+6. The 148px circular PrimaryAction is visual only. Safety checks and the ten-second door-latch confirmation remain inside Family Door.
 
-## Integration
+## Development and releases
 
-See [docs/integration.md](docs/integration.md). Do not make direct changes to Food, Door, MCP or Workout as part of this foundation commit.
+Small teams may commit directly to `main`. GitHub Actions installs dependencies, runs TypeScript and static tests, builds the site, and runs Chromium tests on Ubuntu 24.04. GitHub Pages is deployed only after a successful build job. The current workflow creates the GitHub release `v0.2.0` once after successful deployment; subsequent releases require explicit version/release workflow updates. Existing releases must not be moved or overwritten.
+
+A showcase deployment does not update any consumer. See [integration.md](docs/integration.md) for the adoption process.
