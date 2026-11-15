@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 (unreleased)
+## 0.3.0
 
 - Opt-in full-screen workspace, responsive split layout (including 1:2), pane controls and progress.
 - Timer presentation and duration input layout; interactive cooking showcase and browser tests.
