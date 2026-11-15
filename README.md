@@ -18,6 +18,7 @@ Other applications are outside the current scope. Family UI contains presentatio
 - [Changelog](CHANGELOG.md)
 - [Integration contract](docs/integration.md)
 - [Migration to 0.2.0](docs/migration-0.2.md)
+- [Workspace components](docs/workspace.md)
 - [Layout and component contracts](docs/layout-revision.md)
 
 ## Get started
@@ -47,6 +48,7 @@ Open the component catalog to switch among four themes, Light and Dark modes, an
 | Lists | ActionList navigation and native checkbox selection, revised/compact/aligned variants, optional media and separate actions |
 | Cards | Panel/Card, interactive and compact variants, CardGrid, optional HeroCard |
 | Planning | PeriodNavigator, native Table, interactive cells and contained scrolling |
+| Workspace | Full-screen workspace, responsive split layout, pane controls, progress, timer presentation |
 | Feedback | StatusBadge, EmptyState, Banner, Dialog, Toast |
 | Controls | Existing buttons, fields, navigation and PrimaryAction |
 
