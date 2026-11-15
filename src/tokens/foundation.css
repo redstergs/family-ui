@@ -61,3 +61,36 @@
 @media (max-width: 359px) {
   :root { --fu-primary-action-size: 138px; }
 }
+
+/* Semantic aliases: existing tokens remain public and unchanged. */
+:root {
+  --fu-content-narrow: 720px;
+  --fu-content-wide: 1600px;
+  --fu-page-gutter: var(--fu-space-4);
+  --fu-page-top: var(--fu-space-6);
+  --fu-page-bottom: calc(106px + env(safe-area-inset-bottom, 0px));
+  --fu-section-gap: var(--fu-space-6);
+  --fu-control-height-compact: 44px;
+  --fu-weight-medium: 550;
+  --fu-weight-semibold: 650;
+  --fu-weight-heading: 750;
+  --fu-leading-heading: 1.2;
+  --fu-leading-body: 1.5;
+}
+.fu-app {
+  --fu-surface-interactive: var(--fu-surface);
+  --fu-surface-hover: var(--fu-surface-soft);
+  --fu-surface-selected: var(--fu-accent-soft);
+  --fu-border-interactive: var(--fu-border-strong);
+  --fu-border-selected: var(--fu-accent-text);
+  --fu-divider: var(--fu-border);
+  --fu-text-subtle: var(--fu-text-muted);
+}
+[data-fu-mode="dark"] { --fu-focus: #a7d1ff; }
+@media (min-width: 600px) {
+  :root { --fu-page-gutter: var(--fu-space-6); --fu-page-top: 28px; --fu-page-bottom: 64px; }
+}
+@media (orientation: landscape) and (max-height: 550px) and (max-width: 1200px) {
+  :root { --fu-page-gutter: var(--fu-space-4); --fu-page-top: var(--fu-space-3); --fu-page-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 359px) { :root { --fu-page-gutter: var(--fu-space-3); } }
