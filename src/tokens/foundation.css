@@ -94,3 +94,7 @@
   :root { --fu-page-gutter: var(--fu-space-4); --fu-page-top: var(--fu-space-3); --fu-page-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 359px) { :root { --fu-page-gutter: var(--fu-space-3); } }
+
+/* Interactive outlines: at least 3:1 against the normal surface. */
+:root { --fu-border-action: #778a81; }
+[data-fu-mode="dark"] { --fu-border-action: #91a9a5; }
