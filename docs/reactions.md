@@ -26,3 +26,11 @@ Selection uses `aria-pressed`, a thicker border and a visible check mark; keep t
 Hide the count when there are no comments; keep the comment button available if permitted. A dialog needs an accessible heading, keyboard dismissal and focus restoration to its trigger. Preview comments are fixed demonstration content, not a shared comment service.
 
 Show participation as “1 von 3 abgestimmt”, not the number of approvals. Permissions, counts, network requests, error recovery and persistence belong to the consuming app. The catalog has interactive voting, a comments dialog, selected, disabled and saving examples at all preview widths and in all themes/modes. See `playground/reactions.ts` for demo markup and handlers.
+
+## Meal ratings and `utensils-off`
+
+`familyIcon('utensils-off')` renders upright fork and knife side by side with a top-left to bottom-right slash, using the existing 24px viewBox, 2px round strokes and `currentColor`. Like all icons it is decorative (`aria-hidden`); label its button “Hab ich nicht gegessen”.
+
+Use the existing `.fu-vote` group (accessible name “Mahlzeitenbewertung”) for three mutually exclusive toggle buttons: “Hat geschmeckt”, “Nicht mein Fall”, “Hab ich nicht gegessen”. Add `.fu-reaction--neutral` to the last button and retain `.fu-reaction__selected` for the visible check mark. Its selected state uses neutral surface/text/border tokens, never danger or accent colors. Existing focus, disabled and busy behavior remains available.
+
+Keep the comment button outside the selection group in `.fu-reactions`, with no `aria-pressed`. It remains available regardless of the selected rating; comments are always optional. The preview allows changing or clearing the selection and opening/dismissing comments without changing it. “Not eaten” is a participation state, not a negative taste rating. Storage, aggregation and backend semantics belong to Family Food, not Family UI.

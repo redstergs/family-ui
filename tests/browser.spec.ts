@@ -155,3 +155,52 @@ for(const mode of modes) test("cooking workspace "+mode,async({page})=>{
  await expect(frame.locator('[data-reactions="busy"] [data-vote]').first()).toBeDisabled();
  await expect(frame.locator('[data-reactions="disabled"] [data-comments]')).toBeDisabled();
  });
+
+test("meal rating keeps not-eaten neutral and comments optional in every theme", async ({page}) => {
+ await page.goto("/");
+ await page.locator("#showcase-toggle").click();
+ await page.locator("#showcase-section").selectOption("reactions");
+ const frame = page.frameLocator("#showcase-frame");
+ for (const theme of themes) for (const mode of modes) {
+  await page.locator("#showcase-theme").selectOption(theme);
+  await page.locator("#showcase-mode").selectOption(mode);
+  const row = frame.locator('[data-reactions="meal-rating"]');
+  const group = row.getByRole("group", {name: "Mahlzeitenbewertung"});
+  await expect(group.getByRole("button")).toHaveCount(3);
+  const liked = group.getByRole("button", {name: "Hat geschmeckt", exact: true});
+  const disliked = group.getByRole("button", {name: "Nicht mein Fall", exact: true});
+  const skipped = group.getByRole("button", {name: "Hab ich nicht gegessen", exact: true});
+  await liked.click(); await disliked.click();
+  await expect(liked).toHaveAttribute("aria-pressed", "false");
+  await skipped.focus(); await skipped.press("Space");
+  await expect(disliked).toHaveAttribute("aria-pressed", "false");
+  await expect(skipped).toHaveAttribute("aria-pressed", "true");
+  await expect(frame.locator("#meal-rating-status")).toHaveText("Deine Auswahl: Hab ich nicht gegessen");
+  const appearance = await skipped.evaluate(el => {
+   const s = getComputedStyle(el);
+   const probe = el.ownerDocument.createElement('span'); el.append(probe);
+   probe.style.color = 'var(--fu-text)'; probe.style.backgroundColor = 'var(--fu-surface-soft)';
+   const expected = getComputedStyle(probe);
+   const result = {neutral: s.color === expected.color && s.backgroundColor === expected.backgroundColor,
+    focus: s.outlineStyle, width: el.getBoundingClientRect().width, height: el.getBoundingClientRect().height,
+    mark: getComputedStyle(el.querySelector('.fu-reaction__selected')!).visibility};
+   probe.remove(); return result;
+  });
+  expect(appearance.neutral).toBe(true); expect(appearance.mark).toBe("visible");
+  expect(appearance.focus).toBe("solid");
+  expect(appearance.width).toBeGreaterThanOrEqual(44); expect(appearance.height).toBeGreaterThanOrEqual(44);
+  await expect(skipped.locator('svg')).toHaveAttribute('stroke', 'currentColor');
+  await expect(skipped.locator('svg')).toHaveAttribute('aria-hidden', 'true');
+  await expect(skipped.locator('svg path').last()).toHaveAttribute('d', 'm2 2 20 20');
+  const comments = row.getByRole("button", {name: "Kommentare öffnen", exact: true});
+  await expect(group.locator('[data-comments]')).toHaveCount(0);
+  await expect(comments).not.toHaveAttribute('aria-pressed');
+  await expect(frame.getByRole('dialog')).not.toBeVisible();
+  await comments.click(); await expect(frame.getByRole('dialog')).toBeVisible();
+  await frame.getByRole('button', {name:'Schließen', exact:true}).press('Escape');
+  await expect(comments).toBeFocused();
+  await expect(skipped).toHaveAttribute('aria-pressed', 'true');
+  await skipped.click(); await expect(skipped).toHaveAttribute('aria-pressed', 'false');
+  await expect(frame.locator('#meal-rating-status')).toHaveText('Deine Auswahl: Noch keine Bewertung');
+ }
+});

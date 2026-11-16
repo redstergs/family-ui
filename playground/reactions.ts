@@ -1,9 +1,12 @@
-import { familyIcon } from "../src/icons";
+import { familyIcon, type FamilyIconName } from "../src/icons";
 
-function controls(id: string, selected = "", disabled = false, busy = false, count = 0) {
+function controls(id: string, selected = "", disabled = false, busy = false, count = 0, meal = false) {
+  const options: [string, string, FamilyIconName][] = meal
+    ? [["liked", "Hat geschmeckt", "thumbs-up"], ["disliked", "Nicht mein Fall", "thumbs-down"], ["not-eaten", "Hab ich nicht gegessen", "utensils-off"]]
+    : [["yes", "Zustimmen", "thumbs-up"], ["no", "Ablehnen", "thumbs-down"]];
   return `<div class="fu-reactions" data-reactions="${id}">
-    <div class="fu-vote" role="group" aria-label="Abstimmung" ${busy ? 'aria-busy="true"' : ''}>
-      ${([['yes', 'Zustimmen', 'thumbs-up'], ['no', 'Ablehnen', 'thumbs-down']] as const).map(([value, label, icon]) => `<button type="button" class="fu-reaction" data-vote="${value}" aria-label="${label}" title="${label}" aria-pressed="${selected === value}" ${disabled || busy ? 'disabled' : ''}>${familyIcon(icon)}<span class="fu-reaction__selected" aria-hidden="true">✓</span></button>`).join('')}
+    <div class="fu-vote" role="group" aria-label="${meal ? 'Mahlzeitenbewertung' : 'Abstimmung'}" ${busy ? 'aria-busy="true"' : ''}>
+      ${options.map(([value, label, icon]) => `<button type="button" class="fu-reaction${value === 'not-eaten' ? ' fu-reaction--neutral' : ''}" data-vote="${value}" aria-label="${label}" title="${label}" aria-pressed="${selected === value}" ${disabled || busy ? 'disabled' : ''}>${familyIcon(icon)}<span class="fu-reaction__selected" aria-hidden="true">✓</span></button>`).join('')}
     </div>
     <button type="button" class="fu-reaction" data-comments aria-label="${count ? count + ' Kommentare öffnen' : 'Kommentare öffnen'}" title="Kommentare öffnen" ${disabled ? 'disabled' : ''}>${familyIcon('message-circle')}${count ? `<span class="fu-reaction__count" aria-hidden="true">${count}</span>` : ''}</button>
   </div>`;
@@ -15,6 +18,11 @@ export function reactionsExample() {
       <p id="vote-status" role="status">Deine Stimme: Noch nicht abgestimmt</p>
       ${controls('interactive', '', false, false, 3)}
       <p id="vote-count">1 von 3 abgestimmt</p><p class="fu-field__hint">Dabei: Barbara, Julia, Philipp</p>
+    </article>
+    <article class="fu-panel fu-stack"><h2>Mahlzeitenbewertung</h2>
+      <p id="meal-rating-status" role="status">Deine Auswahl: Noch keine Bewertung</p>
+      ${controls('meal-rating', '', false, false, 0, true)}
+      <p class="fu-field__hint">„Hab ich nicht gegessen“ ist keine Geschmacksbewertung. Ein Kommentar ist bei jeder Auswahl freiwillig.</p>
     </article>
     <article class="fu-panel fu-stack"><h2>Zugestimmt</h2>${controls('yes', 'yes')}<p>Deine Stimme: Zugestimmt</p></article>
     <article class="fu-panel fu-stack"><h2>Abgelehnt</h2>${controls('no', 'no')}<p>Deine Stimme: Abgelehnt</p></article>
@@ -29,6 +37,9 @@ export function bindReactions(doc: Document) {
       button.onclick = () => {
         const selected = button.getAttribute('aria-pressed') !== 'true';
         group.querySelectorAll('[data-vote]').forEach(item => item.setAttribute('aria-pressed', String(item === button && selected)));
+        if (group.dataset.reactions === 'meal-rating') {
+          doc.querySelector('#meal-rating-status')!.textContent = 'Deine Auswahl: ' + (selected ? button.getAttribute('aria-label') : 'Noch keine Bewertung');
+        }
         if (group.dataset.reactions === 'interactive') {
           doc.querySelector('#vote-status')!.textContent = 'Deine Stimme: ' + (selected ? button.dataset.vote === 'yes' ? 'Zugestimmt' : 'Abgelehnt' : 'Noch nicht abgestimmt');
           doc.querySelector('#vote-count')!.textContent = (selected ? '2' : '1') + ' von 3 abgestimmt';
