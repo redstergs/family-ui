@@ -46,3 +46,7 @@ Each migration is a separate application change, with its own acceptance and dep
 ## Security and scope
 
 The repository and showcase must contain simulated data only: no personal data, secrets, real identities, tokens or live door controls. Do not publish other Family repositories merely because Family UI is public. Family Door authorization and the ten-second latch confirmation remain application responsibilities. No consumer migration or new runtime dependency is implied by the library release.
+
+## Voting and comments
+
+Reusable voting and comment buttons with SVG icons, selected/disabled/saving states and an interactive catalog section “Abstimmung & Kommentare”. See [reactions.md](reactions.md). Consumer integration and persistence remain separate.

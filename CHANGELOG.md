@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Add theme-aware voting and comment buttons, decorative icons, accessible selection marks and interactive responsive catalog examples.
+
+
 ## 0.3.0
 
 - Opt-in full-screen workspace, responsive split layout (including 1:2), pane controls and progress.

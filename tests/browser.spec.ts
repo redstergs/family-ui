@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 const themes=["food","door","mcp","workout"];
 const modes=["light","dark"];
-const categories=["foundation","layout","components","action-list","cards","feedback","planning"];
+const categories=["reactions","foundation","layout","components","action-list","cards","feedback","planning"];
 for(const theme of themes) for(const mode of modes) {
  test(theme+" / "+mode+" responsive catalog",async({page})=>{
   await page.goto("/");
@@ -132,3 +132,26 @@ for(const mode of modes) test("cooking workspace "+mode,async({page})=>{
  expect(a).not.toBeNull();expect(b).not.toBeNull();
  expect(b!.width/a!.width).toBeCloseTo(2,1);
 });
+
+ test("votes toggle exclusively and comments restore keyboard focus",async({page})=>{
+ await page.goto("/");
+ await page.locator("#showcase-toggle").click();
+ await page.locator("#showcase-section").selectOption("reactions");
+ const frame=page.frameLocator("#showcase-frame");
+ const group=frame.locator('[data-reactions="interactive"]');
+ const yes=group.getByRole("button",{name:"Zustimmen",exact:true});
+ const no=group.getByRole("button",{name:"Ablehnen",exact:true});
+ await yes.focus(); await yes.press("Space");
+ await expect(yes).toHaveAttribute("aria-pressed","true");
+ await expect(frame.locator("#vote-count")).toHaveText("2 von 3 abgestimmt");
+ await no.click(); await expect(yes).toHaveAttribute("aria-pressed","false");
+ await expect(no).toHaveAttribute("aria-pressed","true");
+ await no.click(); await expect(no).toHaveAttribute("aria-pressed","false");
+ await expect(frame.locator("#vote-count")).toHaveText("1 von 3 abgestimmt");
+ const comments=group.getByRole("button",{name:"3 Kommentare öffnen"});
+ await comments.click(); await expect(frame.getByRole("dialog")).toBeVisible();
+ await frame.getByRole("button",{name:"Schließen",exact:true}).click();
+ await expect(comments).toBeFocused();
+ await expect(frame.locator('[data-reactions="busy"] [data-vote]').first()).toBeDisabled();
+ await expect(frame.locator('[data-reactions="disabled"] [data-comments]')).toBeDisabled();
+ });

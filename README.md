@@ -79,3 +79,7 @@ Applications adopt pinned versions at build time. No runtime CDN, shared service
 Small teams may commit directly to `main`. GitHub Actions installs dependencies, runs TypeScript and static tests, builds the site, and runs Chromium tests on Ubuntu 24.04. GitHub Pages is deployed only after a successful build job. The current workflow creates the GitHub release `v0.3.0` once after successful deployment; subsequent releases require explicit version/release workflow updates. Existing releases must not be moved or overwritten.
 
 A showcase deployment does not update any consumer. See [integration.md](docs/integration.md) for the adoption process.
+
+## Voting and comments
+
+Reusable voting and comment buttons with SVG icons, selected/disabled/saving states and an interactive catalog section “Abstimmung & Kommentare”. See [docs/reactions.md](docs/reactions.md). Consumer integration and persistence remain separate.

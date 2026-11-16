@@ -7,11 +7,14 @@
 export const familyIconNames = [
   "utensils", "door-open", "network", "dumbbell", "play",
   "house", "calendar-days", "book-open", "shopping-basket",
-  "users", "settings", "layout-dashboard", "list", "refresh-cw"
+  "users", "settings", "layout-dashboard", "list", "refresh-cw", "thumbs-up", "thumbs-down", "message-circle"
 ] as const;
 export type FamilyIconName = (typeof familyIconNames)[number];
 
 const paths: Record<FamilyIconName, string> = {
+  "thumbs-up": '<path d="M7 10v11H3V10h4Zm0 0 5-8a3 3 0 0 1 2 4l-1 4h6a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/>',
+  "thumbs-down": '<g transform="rotate(180 12 12)"><path d="M7 10v11H3V10h4Zm0 0 5-8a3 3 0 0 1 2 4l-1 4h6a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></g>',
+  "message-circle": '<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/>',
   "utensils": '<path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M20 3v18M16 3c-2 3-2 8 0 10h4"/>',
   "door-open": '<path d="M13 4h6a2 2 0 0 1 2 2v14H9"/><path d="M3 21V5a2 2 0 0 1 2-2h8l-4 18Z"/><path d="M7 12h.01"/>',
   "network": '<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4m-7 4v-4h14v4"/>',

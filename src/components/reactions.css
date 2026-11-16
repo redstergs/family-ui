@@ -1,0 +1,17 @@
+/* Native toggle buttons: the consumer owns selection and persistence. */
+.fu-reactions, .fu-vote { display: flex; align-items: center; gap: var(--fu-space-2); flex-wrap: wrap; }
+.fu-reactions { gap: var(--fu-space-4); }
+.fu-reaction {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--fu-space-2); min-width: 44px; min-height: 44px; padding: 10px 12px;
+  border: 1px solid var(--fu-border-interactive); border-radius: var(--fu-radius-control);
+  background: var(--fu-surface-interactive); color: var(--fu-text); font: inherit; cursor: pointer;
+}
+.fu-reaction svg { width: 20px; height: 20px; flex-shrink: 0; }
+.fu-reaction:hover:not(:disabled) { background: var(--fu-surface-hover); }
+.fu-reaction[aria-pressed="true"] { background: var(--fu-surface-selected); border-color: var(--fu-accent); box-shadow: inset 0 0 0 1px var(--fu-accent); }
+.fu-reaction__selected { visibility: hidden; font-weight: 700; }
+.fu-reaction[aria-pressed="true"] .fu-reaction__selected { visibility: visible; }
+.fu-reaction:focus-visible { outline: 3px solid var(--fu-focus); outline-offset: 3px; }
+.fu-reaction:disabled { opacity: .55; cursor: not-allowed; }
+.fu-reaction__count { font-size: var(--fu-font-sm); font-weight: 650; }
