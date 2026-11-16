@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 const themes=["food","door","mcp","workout"];
 const modes=["light","dark"];
-const categories=["reactions","foundation","layout","components","action-list","cards","feedback","planning"];
+const categories=["workflows","reactions","foundation","layout","components","action-list","cards","feedback","planning"];
 for(const theme of themes) for(const mode of modes) {
  test(theme+" / "+mode+" responsive catalog",async({page})=>{
   await page.goto("/");
@@ -203,4 +203,14 @@ test("meal rating keeps not-eaten neutral and comments optional in every theme",
   await skipped.click(); await expect(skipped).toHaveAttribute('aria-pressed', 'false');
   await expect(frame.locator('#meal-rating-status')).toHaveText('Deine Auswahl: Noch keine Bewertung');
  }
+});
+
+test("guided workflow from preparation to automatic completion",async({page})=>{
+ await page.goto("/"); await page.locator("#showcase-toggle").click(); await page.locator("#showcase-section").selectOption("workflows");
+ const f=page.frameLocator("#showcase-frame"); const click=(a:string)=>f.locator('[data-workflow-action="'+a+'"]').click();
+ await expect(f.locator('[data-workflow-action="start"]')).toBeDisabled();
+ for(let i=0;i<5;i++)await click("prep-"+i);
+ await click("start"); await click("view-0"); await expect(f.locator('[aria-current="step"]')).toContainText("Menüplanung"); await click("resume"); await click("menu"); await click("publish");
+ await click("change-0"); await click("change-1"); await f.locator("#workflow-role").selectOption("1"); await click("vote-0-1"); await f.locator("#workflow-role").selectOption("2"); await click("vote-1-1"); await f.locator("#workflow-role").selectOption("0"); await click("vote-2-1"); await click("review"); await click("release"); await f.getByRole("button",{name:"Freigeben",exact:true}).click(); await click("recipes"); await expect(f.locator(".fu-process-stepper")).toContainText("Planung abgeschlossen"); await expect(f.locator(".fu-process-stepper li")).toHaveCount(5);
+ await click("reset"); await expect(f.locator('[aria-current="step"]')).toContainText("Vorbereitung");
 });

@@ -26,3 +26,7 @@
 ## 0.1.0
 
 Initial shared design foundation and content primitives.
+
+## Unreleased — Guided workflows
+
+- Add presentation-only workflow components, icons, local planning demo, documentation and tests.

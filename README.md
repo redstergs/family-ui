@@ -83,3 +83,7 @@ A showcase deployment does not update any consumer. See [integration.md](docs/in
 ## Voting and comments
 
 Reusable voting and comment buttons with SVG icons, selected/disabled/saving states and an interactive catalog section “Abstimmung & Kommentare”. See [docs/reactions.md](docs/reactions.md). Consumer integration and persistence remain separate.
+
+## Guided workflows
+
+ProcessStepper, WorkflowHeader, TaskList, ProgressChecklist, WorkflowSummary and ChatGPT handoff. See [workflow contracts](docs/workflows.md) and the local interactive catalog. No consumer workflow logic is included.

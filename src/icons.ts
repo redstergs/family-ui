@@ -7,11 +7,19 @@
 export const familyIconNames = [
   "utensils", "utensils-off", "door-open", "network", "dumbbell", "play",
   "house", "calendar-days", "book-open", "shopping-basket",
-  "users", "settings", "layout-dashboard", "list", "refresh-cw", "thumbs-up", "thumbs-down", "message-circle"
+  "users", "settings", "layout-dashboard", "list", "refresh-cw", "thumbs-up", "thumbs-down", "message-circle", "check", "circle", "circle-dot", "clock", "lock", "circle-alert", "arrow-right", "chatgpt"
 ] as const;
 export type FamilyIconName = (typeof familyIconNames)[number];
 
 const paths: Record<FamilyIconName, string> = {
+  "check": '<path d="m5 12 4 4L19 6"/>',
+  "circle": '<circle cx="12" cy="12" r="9"/>',
+  "circle-dot": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/>',
+  "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  "lock": '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+  "circle-alert": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5m0 4h.01"/>',
+  "arrow-right": '<path d="M4 12h16m-7-7 7 7-7 7"/>',
+  "chatgpt": '<path d="M12 3a5 5 0 0 1 8 4 5 5 0 0 1 1 8 5 5 0 0 1-6 6 5 5 0 0 1-8-1 5 5 0 0 1-4-8 5 5 0 0 1 3-8 5 5 0 0 1 6-1Z"/><path d="m8 9 4-2 5 3v5l-4 2-5-3Z"/>',
   "thumbs-up": '<path d="M7 10v11H3V10h4Zm0 0 5-8a3 3 0 0 1 2 4l-1 4h6a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/>',
   "thumbs-down": '<g transform="rotate(180 12 12)"><path d="M7 10v11H3V10h4Zm0 0 5-8a3 3 0 0 1 2 4l-1 4h6a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></g>',
   "message-circle": '<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/>',

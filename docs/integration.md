@@ -50,3 +50,7 @@ The repository and showcase must contain simulated data only: no personal data, 
 ## Voting and comments
 
 Reusable voting and comment buttons with SVG icons, selected/disabled/saving states and an interactive catalog section “Abstimmung & Kommentare”. See [reactions.md](reactions.md). Consumer integration and persistence remain separate.
+
+## Guided workflows
+
+Use [workflows.md](workflows.md) for the additive CSS/HTML contract. Consumer owns workflow state, authorization, transitions, actions and data; the simulated catalog is not a backend contract.
