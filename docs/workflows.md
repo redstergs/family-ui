@@ -27,3 +27,9 @@ Example:
 ```
 
 Mobile: step list stacks vertically; at 768px it becomes horizontal. Maintain visible status and labels, native buttons, keyboard focus and minimum 44px targets. Use native progress with accessible name and valid value/max. Use native dialog with labelled heading for confirmation. Do not nest interactive controls. No automatic routing or business transitions in CSS. See playground/workflow.ts for complete composition and simulated state.
+
+### Compact navigation
+
+At widths below 768px, consumers may opt into the compact navigation by supplying a button `.fu-process-stepper__toggle` with `aria-expanded` / `aria-controls` and an identified list with `data-expanded="false"` or `true`. In collapsed mode the current and viewed phase remain visible; the toggle label should identify the number of completed phases. Consumers manage expansion and focus. Without those attributes the original list remains visible. Desktop always displays all phases.
+
+The catalog includes a separate examples section for all five components, optional metadata, non-numeric progress and status variants. The weekly simulation includes cancelable explicit release, role-specific tasks and repeat voting. A rejected or changed vote affects only the corresponding meal's simulated vote.

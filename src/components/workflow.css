@@ -37,3 +37,11 @@ button.fu-process-stepper__step:not(:disabled):hover {background:var(--fu-surfac
 .fu-workflow-handoff pre {white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font:inherit;font-size:var(--fu-font-sm)}
 .fu-process-stepper__step:focus-visible,.fu-task-list summary:focus-visible,.fu-workflow-handoff summary:focus-visible {outline:3px solid var(--fu-focus);outline-offset:2px}
 @media(min-width:768px){.fu-process-stepper ol {grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}.fu-process-stepper__step {height:100%;align-items:flex-start;flex-direction:column}}
+
+.fu-process-stepper__toggle {display:none}
+.fu-workflow-handoff h2 svg {width:24px;height:24px;vertical-align:middle}
+@media(max-width:767px){
+ .fu-process-stepper__toggle {display:inline-flex;justify-content:flex-start;white-space:normal}
+ .fu-process-stepper ol[data-expanded="false"] li:not(:has([aria-current="step"],[data-viewed="true"])) {display:none}
+ .fu-process-stepper ol[data-expanded="false"] li:has([data-viewed="true"]:not([aria-current="step"])) {display:block}
+}

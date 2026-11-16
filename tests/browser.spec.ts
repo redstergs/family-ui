@@ -210,7 +210,15 @@ test("guided workflow from preparation to automatic completion",async({page})=>{
  const f=page.frameLocator("#showcase-frame"); const click=(a:string)=>f.locator('[data-workflow-action="'+a+'"]').click();
  await expect(f.locator('[data-workflow-action="start"]')).toBeDisabled();
  for(let i=0;i<5;i++)await click("prep-"+i);
- await click("start"); await click("view-0"); await expect(f.locator('[aria-current="step"]')).toContainText("Menüplanung"); await click("resume"); await click("menu"); await click("publish");
- await click("change-0"); await click("change-1"); await f.locator("#workflow-role").selectOption("1"); await click("vote-0-1"); await f.locator("#workflow-role").selectOption("2"); await click("vote-1-1"); await f.locator("#workflow-role").selectOption("0"); await click("vote-2-1"); await click("review"); await click("release"); await f.getByRole("button",{name:"Freigeben",exact:true}).click(); await click("recipes"); await expect(f.locator(".fu-process-stepper")).toContainText("Planung abgeschlossen"); await expect(f.locator(".fu-process-stepper li")).toHaveCount(5);
+ await click("start"); await click("view-0"); await expect(f.locator('[aria-current="step"]')).toContainText("Menüplanung"); await click("return-current"); await click("menu"); await click("publish");
+ await click("change-0"); await click("change-1"); await f.locator("#workflow-role").selectOption("1"); await click("vote-0-2"); await f.locator("#workflow-role").selectOption("0"); await click("change-0"); await f.locator("#workflow-role").selectOption("1"); await click("vote-0-1"); await f.locator("#workflow-role").selectOption("2"); await click("vote-1-1"); await f.locator("#workflow-role").selectOption("0"); await click("vote-2-1"); await click("review"); await click("release"); await f.getByRole("button",{name:"Abbrechen",exact:true}).click(); await expect(f.locator('[aria-current="step"]')).toContainText("Finale Freigabe"); await click("release"); await f.getByRole("button",{name:"Freigeben",exact:true}).click(); await click("recipes"); await expect(f.locator(".fu-process-stepper")).toContainText("Planung abgeschlossen"); await expect(f.locator(".fu-process-stepper li")).toHaveCount(5);
  await click("reset"); await expect(f.locator('[aria-current="step"]')).toContainText("Vorbereitung");
+});
+
+test("compact workflow navigation and isolated examples",async({page})=>{
+ await page.goto("/"); await page.locator("#showcase-toggle").click(); await page.locator("#showcase-size").selectOption("320px"); await page.locator("#showcase-section").selectOption("workflows");
+ const f=page.frameLocator("#showcase-frame"); const toggle=f.locator('[data-workflow-action="step-toggle"]');
+ await expect(toggle).toBeVisible(); await expect(f.locator("#workflow-steps li:visible")).toHaveCount(1);
+ await toggle.focus(); await toggle.press("Enter"); await expect(f.locator("#workflow-steps li:visible")).toHaveCount(5); await expect(toggle).toHaveAttribute("aria-expanded","true");
+ await f.locator('[data-workflow-action="catalog"]').click(); await expect(f.getByRole("region",{name:"Einzelkomponenten"})).toBeVisible();
 });
