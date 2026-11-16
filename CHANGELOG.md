@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add `utensils-off`, a neutral reaction selection modifier and a three-option meal-rating preview with independent optional comments.
+
 - Add theme-aware voting and comment buttons, decorative icons, accessible selection marks and interactive responsive catalog examples.
 
 
