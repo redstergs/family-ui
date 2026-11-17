@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 const themes=["food","door","mcp","workout"];
 const modes=["light","dark"];
-const categories=["workflows","reactions","foundation","layout","components","action-list","cards","feedback","planning"];
+const categories=["inputs","workflows","reactions","foundation","layout","components","action-list","cards","feedback","planning"];
 for(const theme of themes) for(const mode of modes) {
  test(theme+" / "+mode+" responsive catalog",async({page})=>{
   await page.goto("/");
@@ -221,4 +221,25 @@ test("compact workflow navigation and isolated examples",async({page})=>{
  await expect(toggle).toBeVisible(); await expect(f.locator("#workflow-steps li:visible")).toHaveCount(1);
  await toggle.focus(); await toggle.press("Enter"); await expect(f.locator("#workflow-steps li:visible")).toHaveCount(5); await expect(toggle).toHaveAttribute("aria-expanded","true");
  await f.locator('[data-workflow-action="catalog"]').click(); await expect(f.getByRole("region",{name:"Einzelkomponenten"})).toBeVisible();
+});
+
+test("shared account menu and independent disclosure actions",async({page})=>{
+ await page.goto("/");await page.locator("#showcase-toggle").click();
+ await page.locator("#showcase-size").selectOption("390px");
+ await page.locator("#showcase-section").selectOption("inputs");
+ const f=page.frameLocator("#showcase-frame");
+ const account=f.getByRole("button",{name:"Benutzerkonto",exact:true});
+ await account.press("Enter");await expect(f.locator("#account-desktop")).toBeVisible();
+ await expect(f.getByRole("menuitem",{name:"Profil",exact:true}).first()).toBeFocused();
+ await account.press("Escape");await expect(account).toBeFocused();
+ await expect(f.locator("#account-desktop")).toBeHidden();
+ await f.getByRole("button",{name:"Kochmodus starten"}).click();
+ await expect(f.locator("#recipe-detail")).toBeHidden();
+ await f.locator('[aria-controls="recipe-detail"]').click();
+ await expect(f.locator("#recipe-detail")).toBeVisible();
+ const clipped=f.getByRole("button",{name:"Menü im Scrollcontainer"});
+ await clipped.click();await expect(f.locator("#clipped-menu")).toBeVisible();
+ await expect(f.locator("#clipped-menu")).toHaveJSProperty("hidden",false);
+ await f.locator("#clipped-menu").getByRole("menuitem",{name:"Kopieren"}).click();
+ await expect(clipped).toBeFocused();
 });
