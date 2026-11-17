@@ -1,3 +1,5 @@
+import {selectionControls,bindSelectionControls} from "../src/selection";
+import {weekDaySelector} from "../src/dialogs";
 import {numberInput,quantityInput,durationInput,disclosureButton,disclosureSection,bindInputs,bindDisclosures,durationValue,adaptiveRepeat} from "../src/inputs";
 import {actionMenu,accountMenu,bindMenus} from "../src/dialogs";
 import {familyIcon,familyIconNames} from "../src/icons";
@@ -15,6 +17,8 @@ export function inputsExample():string {
  '<div class="fu-row">Zutaten '+disclosureButton({id:"demo-ingredients",label:"Zutaten ein- oder ausblenden"})+'</div><div id="demo-ingredients" hidden>350 g Nudeln</div>'+
  '<div class="fu-stack" data-fu-accordion>'+disclosureSection({id:"demo-section-a",label:"Zubereitung",expanded:true},"Gemüse schneiden")+disclosureSection({id:"demo-section-b",label:"Nährwerte"},"520 kcal")+'</div>'+
  actionMenu("demo-input-menu","Weitere Aktionen",[{id:"edit",label:"Bearbeiten"},{id:"copy",label:"Kopieren"}])+'<output id="demo-menu-result"></output>'+
+ '<h3>Mehrfachauswahl</h3>'+selectionControls({targetId:"adaptive-selection",allLabel:"Alle auswählen",clearLabel:"Auswahl löschen",invertLabel:"Auswahl umkehren"})+'<div id="adaptive-selection">'+["Mehl","Milch","Nudeln"].map((n,i)=>'<label class="fu-check"><input type="checkbox" '+(i===0?'checked':i===2?'disabled':'')+'>'+n+'</label>').join("")+'</div>'+
+ '<h3>Wochenwechsel</h3><div id="adaptive-week"></div>'+
  '<h3>Disclosure und Konto</h3>'+disclosureSection({id:"recipe-detail",label:"Mediterrane Ofengemüse-Bowl mit Kichererbsen und Zitronendressing",media:familyIcon("utensils"),metadata:"45 Minuten · 3 Portionen",status:"Geplant",actions:'<button class="fu-button" data-demo-action="Kochmodus">Kochmodus starten</button>'+actionMenu("recipe-menu","Rezeptaktionen",[{id:"edit",label:"Bearbeiten",icon:"pencil"}])},"Zutaten und Zubereitung")+
  disclosureButton({id:"participants-demo",label:"Teilnehmer ändern",text:"Teilnehmer ändern"})+'<div id="participants-demo" hidden>Teilnehmer auswählen</div>'+
  accountMenu({id:"account-desktop",label:"Benutzerkonto",name:"Alex",secondary:"Familienmitglied",initials:"A",items:[{id:"profile",label:"Profil",icon:"user-round"},{id:"keys",label:"Passkeys",icon:"key-round"},{id:"admin",label:"Verwaltung",disabled:true},{id:"logout",label:"Abmelden",icon:"log-out",group:"session"}]})+
@@ -24,7 +28,14 @@ export function inputsExample():string {
 }
 export function bindInputExample(doc:Document):void {
  const root=doc.getElementById("input-example");if(!root)return;
- bindInputs(root);bindDisclosures(root);
+ bindInputs(root);bindDisclosures(root);bindSelectionControls(root);
+ const week=doc.getElementById("adaptive-week");if(week){
+ let start=new Date(2026,10,16,12);
+ const render=()=>{week.innerHTML=weekDaySelector({label:start.toLocaleDateString("de-AT"),previousLabel:"Vorige Woche",nextLabel:"Nächste Woche",jumps:{periods:4,previousLabel:"Vier Wochen zurück",nextLabel:"Vier Wochen vor"},todayLabel:"Heute",dateJump:{label:"Datum wählen"},days:Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);return {id:String(i),weekday:d.toLocaleDateString("de-AT",{weekday:"short"}),number:String(d.getDate()),label:d.toLocaleDateString("de-AT"),selected:false};})});};
+ const monday=(d:Date)=>{d.setDate(d.getDate()-(d.getDay()+6)%7);return d;};
+ week.addEventListener("click",e=>{const b=(e.target as Element).closest<HTMLElement>("[data-fu-week],[data-fu-week-today]");if(!b)return;if(b.hasAttribute("data-fu-week-today"))start=monday(new Date());else start.setDate(start.getDate()+7*Number(b.dataset.fuWeek));render();});
+ week.addEventListener("change",e=>{const input=e.target as HTMLInputElement;if(input.matches("[data-fu-week-date]")&&input.value){start=monday(new Date(input.value+"T12:00:00"));render();}});render();
+ }
  const timer=root.querySelectorAll("[data-fu-duration]")[3],output=doc.getElementById("demo-duration-result")!;
  const update=()=>{const n=durationValue(timer);output.textContent=n===null?"Ungültige Dauer":n+" s";const a=durationValue(root.querySelector("#adaptive-timer-hours")!.closest("[data-fu-duration]")!);doc.getElementById("adaptive-time-result")!.textContent=a===null?"Ungültige Dauer":a+" s";};
  root.addEventListener("input",update);root.addEventListener("change",update);
