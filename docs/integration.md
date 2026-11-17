@@ -69,3 +69,7 @@ Import helpers from `@redstergs/family-ui/inputs`; see [inputs.md](inputs.md). T
 Import `actionMenu`, `accountMenu` and `bindMenus` from `@redstergs/family-ui/dialogs`. Render markup, call `bindMenus(root)` after insertion, and call the returned cleanup before removing the root. Rebinding the same root removes previous bindings. Handle `data-fu-action` clicks in the application; remove old local menu toggle handlers. AccountMenu accepts id, label, name, secondary, avatar, initials, compact and items. Items accept id, label, icon, disabled and group.
 
 Import `disclosureButton`, `disclosureSection`, `bindDisclosures` from `@redstergs/family-ui/inputs`. Use text, expandedText and collapsedText for optional labels; section media, metadata, status and actions are optional. Media, status, actions and body are trusted markup only. Bind after rendering and clean up on unmount. Keep action buttons outside the disclosure toggle. No authentication or persistence is supplied.
+
+## Adaptive input and navigation (unreleased)
+
+Opt-in adaptive steps, repeat policies, duration carry and corrections, period jumps and bulk selection. Existing fixed-step and duration picker contracts remain available. See [adaptive input integration](adaptive-inputs.md).
