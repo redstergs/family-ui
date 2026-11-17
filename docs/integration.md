@@ -54,3 +54,8 @@ Reusable voting and comment buttons with SVG icons, selected/disabled/saving sta
 ## Guided workflows
 
 Use [workflows.md](workflows.md) for the additive CSS/HTML contract. Consumer owns workflow state, authorization, transitions, actions and data; the simulated catalog is not a backend contract.
+
+
+## Contextual editing dialogs
+
+See [dialog components](dialogs.md) for generic contextual actions, native dialogs, participant, weekday and slot selection, and conflict decisions.

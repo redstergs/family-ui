@@ -30,3 +30,8 @@ Initial shared design foundation and content primitives.
 ## Unreleased — Guided workflows
 
 - Add presentation-only workflow components, icons, local planning demo, documentation and tests.
+
+
+## Unreleased – contextual editing dialogs
+
+- Add opt-in structured native dialogs, action disclosure, person/week/slot selectors, conflict actions, icons and interactive meal editing catalog.

@@ -8,10 +8,22 @@ export const familyIconNames = [
   "utensils", "utensils-off", "door-open", "network", "dumbbell", "play",
   "house", "calendar-days", "book-open", "shopping-basket",
   "users", "settings", "layout-dashboard", "list", "refresh-cw", "thumbs-up", "thumbs-down", "message-circle", "check", "circle", "circle-dot", "clock", "lock", "circle-alert", "arrow-right", "chatgpt"
+, "ellipsis", "chevron-left", "chevron-right", "x", "calendar-x", "calendar-arrow-right", "arrow-left-right", "replace", "coffee", "moon", "apple"
 ] as const;
 export type FamilyIconName = (typeof familyIconNames)[number];
 
 const paths: Record<FamilyIconName, string> = {
+  "ellipsis": '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+  "chevron-left": '<path d="m15 18-6-6 6-6"/>',
+  "chevron-right": '<path d="m9 18 6-6-6-6"/>',
+  "x": '<path d="m6 6 12 12M18 6 6 18"/>',
+  "calendar-x": '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 10h18m-12 3 6 6m0-6-6 6"/>',
+  "calendar-arrow-right": '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 10h18m-13 6h8m-3-3 3 3-3 3"/>',
+  "arrow-left-right": '<path d="M3 7h18m-4-4 4 4-4 4M21 17H3m4-4-4 4 4 4"/>',
+  "replace": '<path d="M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4"/>',
+  "coffee": '<path d="M3 8h14v7a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4ZM17 9h2a3 3 0 0 1 0 6h-2M3 22h18M7 3v2m5-2v2"/>',
+  "moon": '<path d="M21 13a9 9 0 1 1-10-10 8 8 0 0 0 10 10Z"/>',
+  "apple": '<path d="M12 7c-6-5-12 2-8 10 2 4 5 5 8 3 3 2 6 1 8-3 4-8-2-15-8-10Zm0 0c0-3 2-5 5-5"/>',
   "check": '<path d="m5 12 4 4L19 6"/>',
   "circle": '<circle cx="12" cy="12" r="9"/>',
   "circle-dot": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/>',

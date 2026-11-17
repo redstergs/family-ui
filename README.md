@@ -87,3 +87,8 @@ Reusable voting and comment buttons with SVG icons, selected/disabled/saving sta
 ## Guided workflows
 
 ProcessStepper, WorkflowHeader, TaskList, ProgressChecklist, WorkflowSummary and ChatGPT handoff. See [workflow contracts](docs/workflows.md) and the local interactive catalog. No consumer workflow logic is included.
+
+
+## Contextual editing dialogs
+
+See [dialog components](docs/dialogs.md) for generic contextual actions, native dialogs, participant, weekday and slot selection, and conflict decisions.

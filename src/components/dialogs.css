@@ -1,0 +1,42 @@
+
+/* Opt-in native modal composition. Existing dialogs are unchanged. */
+.fu-dialog--structured { padding:0; overflow:hidden; width:min(100% - 24px,480px); }
+.fu-dialog--structured[open] { display:flex; flex-direction:column; }
+.fu-dialog__header,.fu-dialog__footer { flex:none; padding:var(--fu-space-4); }
+.fu-dialog__header { display:flex; align-items:center; justify-content:space-between; gap:var(--fu-space-2); }
+.fu-dialog__header h2 { margin:0; font-size:var(--fu-font-lg); }
+.fu-dialog__body { min-height:0; overflow:auto; padding:0 var(--fu-space-4) var(--fu-space-3); display:grid; gap:var(--fu-space-4); }
+.fu-dialog__footer { display:grid; gap:var(--fu-space-2); border-top:1px solid var(--fu-border); }
+.fu-dialog__footer .fu-button { width:100%; }
+.fu-context { display:flex; align-items:center; gap:var(--fu-space-3); min-width:0; }
+.fu-context__media { width:48px; height:48px; flex:none; display:grid; place-items:center; border-radius:var(--fu-radius-control); background:var(--fu-surface-soft); overflow:hidden; }
+.fu-context__media img { width:100%; height:100%; object-fit:cover; }
+.fu-context__text { min-width:0; display:grid; gap:2px; overflow-wrap:anywhere; }
+.fu-context__meta { color:var(--fu-text-muted); font-size:var(--fu-font-sm); }
+.fu-icon-button,.fu-action-menu__item,.fu-week-day,.fu-slot { font:inherit; color:var(--fu-text); cursor:pointer; border:0; background:transparent; }
+.fu-icon-button { min-width:44px; min-height:44px; display:inline-grid; place-items:center; border-radius:var(--fu-radius-control); }
+.fu-icon-button:hover,.fu-action-menu__item:hover,.fu-week-day:hover,.fu-slot:hover { background:var(--fu-surface-hover); }
+.fu-icon-button:focus-visible,.fu-action-menu__item:focus-visible,.fu-week-day:focus-visible,.fu-slot:focus-visible { outline:3px solid var(--fu-focus); outline-offset:-3px; }
+.fu-action-menu { position:relative; }
+.fu-action-menu__items { position:absolute; inset-inline-end:0; top:100%; z-index:5; min-width:max-content; max-width:calc(100vw - 32px); background:var(--fu-surface); border:1px solid var(--fu-border); border-radius:var(--fu-radius-panel); padding:var(--fu-space-1); }
+.fu-action-menu__item { display:flex; align-items:center; gap:var(--fu-space-2); width:100%; min-height:44px; padding:var(--fu-space-2); text-align:start; border-radius:var(--fu-radius-control); }
+.fu-week-selector { display:grid; gap:var(--fu-space-2); }
+.fu-week-selector__header { display:grid; grid-template-columns:44px minmax(0,1fr) 44px; align-items:center; text-align:center; }
+.fu-week-selector__label { display:grid; gap:2px; font-size:var(--fu-font-sm); }
+.fu-week-selector__days { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:2px; }
+.fu-week-day { min-width:0; min-height:68px; display:grid; justify-items:center; align-content:center; gap:2px; padding:3px 0; border-radius:var(--fu-radius-control); background:var(--fu-surface-soft); }
+.fu-week-day__weekday { font-size:var(--fu-font-xs); color:var(--fu-text-muted); }
+.fu-week-day__number { font-size:var(--fu-font-lg); font-weight:700; }
+.fu-week-day__mark { height:6px; width:6px; border-radius:50%; }
+.fu-week-day[aria-current="date"] .fu-week-day__mark { background:var(--fu-accent); }
+.fu-week-day[data-original="true"] .fu-week-day__number { text-decoration:underline; text-underline-offset:3px; }
+.fu-week-day[aria-pressed="true"],.fu-slot[aria-pressed="true"] { background:var(--fu-surface-selected); box-shadow:inset 0 0 0 1px var(--fu-accent); }
+.fu-slot-selector,.fu-person-selector,.fu-conflict-actions { display:grid; gap:var(--fu-space-1); }
+.fu-slot { display:flex; align-items:center; gap:var(--fu-space-3); min-height:58px; width:100%; text-align:start; padding:var(--fu-space-2); border-radius:var(--fu-radius-control); }
+.fu-slot__body { flex:1; min-width:0; display:grid; gap:2px; overflow-wrap:anywhere; }
+.fu-slot__mark { flex:none; }
+.fu-slot:disabled,.fu-week-day:disabled,.fu-icon-button:disabled,.fu-action-menu__item:disabled { opacity:.55; cursor:not-allowed; }
+.fu-person-selector .fu-action-list-item { min-height:56px; padding-block:var(--fu-space-2); }
+.fu-person-selector .fu-action-list-item__media { width:36px; height:36px; border-radius:50%; }
+.fu-conflict-actions .fu-action-list-item { min-height:60px; }
+@media(max-width:599px) { .fu-dialog--structured { width:100%; padding:0; max-height:calc(100dvh - 12px); } .fu-dialog__footer { padding-bottom:max(var(--fu-space-4),env(safe-area-inset-bottom)); } }

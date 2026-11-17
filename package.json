@@ -15,7 +15,9 @@
   "exports": {
     ".": "./src/index.css",
     "./tokens": "./src/tokens/index.css",
-    "./components": "./src/components/index.css"
+    "./components": "./src/components/index.css",
+    "./dialogs": "./src/dialogs.ts",
+    "./icons": "./src/icons.ts"
   },
   "devDependencies": {
     "typescript": "^5.7.3",
