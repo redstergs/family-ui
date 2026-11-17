@@ -40,3 +40,6 @@
 .fu-person-selector .fu-action-list-item__media { width:36px; height:36px; border-radius:50%; }
 .fu-conflict-actions .fu-action-list-item { min-height:60px; }
 @media(max-width:599px) { .fu-dialog--structured { width:100%; padding:0; max-height:calc(100dvh - 12px); } .fu-dialog__footer { padding-bottom:max(var(--fu-space-4),env(safe-area-inset-bottom)); } }
+
+.fu-action-menu__items[hidden] { display:none; }
+.fu-dialog--structured { box-sizing:border-box; }

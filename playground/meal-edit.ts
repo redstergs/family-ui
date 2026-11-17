@@ -38,7 +38,7 @@ export function bindMealEdit(doc:Document){
   const h=doc.getElementById("meal-dialog-host")!;
   if(dialog){dialog.onclose=null;dialog.close();}
   h.innerHTML=structuredDialog({id:"meal-dialog",title,body,cancelLabel:"Abbrechen",confirmLabel,confirmDisabled,danger});
-  const d=h.querySelector<HTMLDialogElement>("dialog")!;dialog=d;
+  const d=h.querySelector<HTMLDialogElement>("dialog")!;dialog=d; d.returnValue="";
   d.onclose=()=>{if(dialog!==d)return;dialog=null;if(d.returnValue==="confirm"&&onConfirm)onConfirm();else{h.innerHTML="";restore();}};
   d.showModal();
  }
