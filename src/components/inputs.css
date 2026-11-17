@@ -1,0 +1,23 @@
+.fu-number { min-width:0; }
+.fu-number__row { display:flex; align-items:center; gap:var(--fu-space-2); }
+.fu-number__row input { flex:1; min-width:0; box-sizing:border-box; text-align:center; font-variant-numeric:tabular-nums; }
+.fu-number__unit { width:auto; max-width:35%; }
+.fu-number__step,.fu-disclosure-button { flex:none; min-width:44px; min-height:44px; }
+.fu-number__presets { display:flex; flex-wrap:wrap; gap:var(--fu-space-2); }
+.fu-duration { border:0; padding:0; margin:0; min-width:0; }
+.fu-duration__parts { display:flex; gap:var(--fu-space-2); flex-wrap:wrap; margin-block:var(--fu-space-2); }
+.fu-duration__parts > div { flex:1 1 64px; min-width:0; }
+.fu-duration__parts .fu-number__row { display:grid; grid-template-columns:minmax(0,1fr); justify-items:stretch; gap:var(--fu-space-1); }
+.fu-duration__parts .fu-number__step { width:100%; }
+.fu-duration__parts .fu-field__label { text-align:center; overflow-wrap:anywhere; }
+.fu-disclosure-section { border:1px solid var(--fu-border-interactive); border-radius:var(--fu-radius-control); }
+.fu-disclosure-section h3 { margin:0; font:inherit; }
+.fu-disclosure-section__header { display:flex; align-items:center; justify-content:space-between; gap:var(--fu-space-2); width:100%; min-height:44px; padding:var(--fu-space-3); border:0; border-radius:var(--fu-radius-control); background:var(--fu-surface-interactive); color:var(--fu-text); font:inherit; font-weight:650; text-align:left; cursor:pointer; }
+.fu-disclosure-section__header:hover:not(:disabled),.fu-disclosure-button:hover:not(:disabled) { background:var(--fu-surface-hover); }
+.fu-disclosure-section__header:focus-visible,.fu-disclosure-button:focus-visible { outline:3px solid var(--fu-focus); outline-offset:3px; }
+.fu-disclosure-section__header:disabled { opacity:.55; cursor:not-allowed; }
+.fu-disclosure-section__header svg,.fu-disclosure-button svg { width:20px; height:20px; flex:none; transition:transform 180ms var(--fu-ease); }
+[data-fu-disclosure][aria-expanded="true"] svg { transform:rotate(180deg); }
+.fu-disclosure-section__body { padding:var(--fu-space-3); }
+.fu-disclosure-section__body[hidden] { display:none; }
+@media(prefers-reduced-motion:reduce) { .fu-disclosure-section__header svg,.fu-disclosure-button svg { transition:none; } }
