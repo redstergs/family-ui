@@ -2,8 +2,8 @@ export interface StepBand { from:number; step:number }
 export type StepPolicy=readonly StepBand[];
 export interface RepeatBand { afterMs:number; intervalMs:number }
 export type RepeatPolicy=false|readonly RepeatBand[];
-export const adaptiveRepeat:RepeatPolicy=[{afterMs:400,intervalMs:200},{afterMs:1500,intervalMs:100},{afterMs:3000,intervalMs:50}];
-export const legacyRepeat:RepeatPolicy=[{afterMs:400,intervalMs:85}];
+export const adaptiveRepeat:readonly RepeatBand[]=[{afterMs:400,intervalMs:200},{afterMs:1500,intervalMs:100},{afterMs:3000,intervalMs:50}];
+export const legacyRepeat:readonly RepeatBand[]=[{afterMs:400,intervalMs:85}];
 export function stepValue(value:number,direction:number,fallback:number,policy?:StepPolicy,min=-Infinity,max=Infinity):number {
  const bands=(policy??[]).filter(b=>Number.isFinite(b.from)&&Number.isFinite(b.step)&&b.step>0).slice().sort((a,b)=>a.from-b.from);
  const dir=direction<0?-1:1;
