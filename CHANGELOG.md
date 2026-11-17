@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.4.0
+
+- Shared popover and account menu, keyboard interaction, responsive disclosure headers, labeled toggles and nine icons.
+- Shared ProcessStepper disclosure and updated preview and integration documentation.
 
 - Add `utensils-off`, a neutral reaction selection modifier and a three-option meal-rating preview with independent optional comments.
 
@@ -27,11 +30,11 @@
 
 Initial shared design foundation and content primitives.
 
-## Unreleased — Guided workflows
+### 0.4.0 — Guided workflows
 
 - Add presentation-only workflow components, icons, local planning demo, documentation and tests.
 
 
-## Unreleased – contextual editing dialogs
+### 0.4.0 – contextual editing dialogs
 
 - Add opt-in structured native dialogs, action disclosure, person/week/slot selectors, conflict actions, icons and interactive meal editing catalog.
