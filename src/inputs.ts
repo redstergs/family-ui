@@ -54,12 +54,33 @@ export function bindInputs(root:ParentNode):void {
  };
  }
 }
-export interface DisclosureProps {id:string;label:string;expanded?:boolean;disabled?:boolean}
-/** Label is escaped; section body must be trusted markup. */
-export function disclosureButton(p:DisclosureProps):string {return '<button type="button" class="fu-icon-button fu-disclosure-button" aria-label="'+esc(p.label)+'" aria-controls="'+esc(p.id)+'" aria-expanded="'+Boolean(p.expanded)+'" data-fu-disclosure'+(p.disabled?' disabled':'')+'>'+familyIcon("chevron-down")+'</button>';}
-export function disclosureSection(p:DisclosureProps,body:string):string {return '<section class="fu-disclosure-section"><h3><button type="button" class="fu-disclosure-section__header" data-fu-disclosure aria-expanded="'+Boolean(p.expanded)+'" aria-controls="'+esc(p.id)+'"'+(p.disabled?' disabled':'')+'><span>'+esc(p.label)+'</span>'+familyIcon("chevron-down")+'</button></h3><div class="fu-disclosure-section__body" id="'+esc(p.id)+'"'+(p.expanded?'':' hidden')+'>'+body+'</div></section>';}
-export function bindDisclosures(root:ParentNode):void {
- const buttons=Array.from(root.querySelectorAll<HTMLButtonElement>("[data-fu-disclosure]"));
- const set=(b:HTMLButtonElement,open:boolean)=>{const id=b.getAttribute("aria-controls");const panel=id?b.ownerDocument.getElementById(id):null;if(!panel)return;b.setAttribute("aria-expanded",String(open));panel.hidden=!open;};
- for(const b of buttons)b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")!=="true",group=b.closest("[data-fu-accordion]");if(open&&group)for(const other of buttons)if(other!==b&&other.closest("[data-fu-accordion]")===group)set(other,false);set(b,open);});
+export interface DisclosureProps {id:string;label:string;expanded?:boolean;disabled?:boolean;text?:string;expandedText?:string;collapsedText?:string}
+export interface DisclosureSectionProps extends DisclosureProps {media?:string;metadata?:string;status?:string;actions?:string}
+/** Media, status, actions and body are trusted consumer markup. Text labels are escaped. */
+function disclosureAttributes(p:DisclosureProps):string {
+ return ' aria-label="'+esc(p.label)+'" aria-controls="'+esc(p.id)+'" aria-expanded="'+Boolean(p.expanded)+'" data-fu-disclosure'+(p.disabled?' disabled':'');
+}
+export function disclosureButton(p:DisclosureProps):string {
+ const closed=p.collapsedText??p.text??p.expandedText, opened=p.expandedText??p.text??closed;
+ return '<button type="button" class="fu-icon-button fu-disclosure-button"'+disclosureAttributes(p)+'>'+(closed!==undefined?'<span data-fu-disclosure-text data-closed="'+esc(closed)+'" data-open="'+esc(opened??closed)+'">'+esc((p.expanded?opened:closed)??closed)+'</span>':'')+familyIcon("chevron-down")+'</button>';
+}
+export function disclosureSection(p:DisclosureSectionProps,body:string):string {
+ return '<section class="fu-disclosure-section"><div class="fu-disclosure-section__heading"><h3><button type="button" class="fu-disclosure-section__header"'+disclosureAttributes(p)+'>'+(p.media?'<span class="fu-disclosure-section__media">'+p.media+'</span>':'')+'<span class="fu-disclosure-section__title"><span>'+esc(p.label)+'</span>'+(p.metadata?'<small>'+esc(p.metadata)+'</small>':'')+(p.status?'<span>'+p.status+'</span>':'')+'</span>'+familyIcon("chevron-down")+'</button></h3>'+(p.actions?'<div class="fu-disclosure-section__actions">'+p.actions+'</div>':'')+'</div><div class="fu-disclosure-section__body" id="'+esc(p.id)+'"'+(p.expanded?'':' hidden')+'>'+body+'</div></section>';
+}
+const disclosureBindings=new WeakMap<ParentNode,AbortController>();
+export function bindDisclosures(root:ParentNode):()=>void {
+ disclosureBindings.get(root)?.abort();
+ const controller=new AbortController();disclosureBindings.set(root,controller);
+ const set=(b:HTMLButtonElement,open:boolean)=>{
+ const id=b.getAttribute("aria-controls");const panel=id?b.ownerDocument.getElementById(id):null;if(!panel)return;
+ b.setAttribute("aria-expanded",String(open));panel.hidden=!open;
+ const label=b.querySelector<HTMLElement>("[data-fu-disclosure-text]");
+ if(label){label.textContent=(open?label.dataset.open:label.dataset.closed)??"";b.setAttribute("aria-label",label.textContent);}
+ };
+ for(const b of Array.from(root.querySelectorAll<HTMLButtonElement>("[data-fu-disclosure]")))b.addEventListener("click",()=>{
+ const open=b.getAttribute("aria-expanded")!=="true",group=b.closest("[data-fu-accordion]");
+ if(open&&group)for(const other of Array.from(group.querySelectorAll<HTMLButtonElement>("[data-fu-disclosure]")))if(other!==b&&other.closest("[data-fu-accordion]")===group)set(other,false);
+ set(b,open);
+ },{signal:controller.signal});
+ return ()=>{controller.abort();if(disclosureBindings.get(root)===controller)disclosureBindings.delete(root);};
 }
