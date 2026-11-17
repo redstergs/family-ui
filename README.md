@@ -100,3 +100,7 @@ NumberInput, QuantityInput, DurationInput, DisclosureButton and DisclosureSectio
 ## 0.4.0
 
 Shared action and account menus, text disclosures, responsive section actions and ProcessStepper preview integration. See [integration](docs/integration.md) for bindings and migration.
+
+## Adaptive input and navigation (unreleased)
+
+Opt-in adaptive steps, repeat policies, duration carry and corrections, period jumps and bulk selection. Existing fixed-step and duration picker contracts remain available. See [adaptive input integration](docs/adaptive-inputs.md).
