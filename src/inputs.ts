@@ -70,7 +70,7 @@ export function disclosureSection(p:DisclosureSectionProps,body:string):string {
 const disclosureBindings=new WeakMap<ParentNode,AbortController>();
 export function bindDisclosures(root:ParentNode):()=>void {
  disclosureBindings.get(root)?.abort();
- const controller=new AbortController();disclosureBindings.set(root,controller);
+ const controller=new (root.querySelector("button")?.ownerDocument.defaultView?.AbortController??AbortController)();disclosureBindings.set(root,controller);
  const set=(b:HTMLButtonElement,open:boolean)=>{
  const id=b.getAttribute("aria-controls");const panel=id?b.ownerDocument.getElementById(id):null;if(!panel)return;
  b.setAttribute("aria-expanded",String(open));panel.hidden=!open;
