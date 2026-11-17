@@ -217,7 +217,7 @@ test("guided workflow from preparation to automatic completion",async({page})=>{
 
 test("compact workflow navigation and isolated examples",async({page})=>{
  await page.goto("/"); await page.locator("#showcase-toggle").click(); await page.locator("#showcase-size").selectOption("320px"); await page.locator("#showcase-section").selectOption("workflows");
- const f=page.frameLocator("#showcase-frame"); const toggle=f.locator('[data-workflow-action="step-toggle"]');
+ const f=page.frameLocator("#showcase-frame"); const toggle=f.locator('[aria-controls="workflow-steps"]');
  await expect(toggle).toBeVisible(); await expect(f.locator("#workflow-steps li:visible")).toHaveCount(1);
  await toggle.focus(); await toggle.press("Enter"); await expect(f.locator("#workflow-steps li:visible")).toHaveCount(5); await expect(toggle).toHaveAttribute("aria-expanded","true");
  await f.locator('[data-workflow-action="catalog"]').click(); await expect(f.getByRole("region",{name:"Einzelkomponenten"})).toBeVisible();
