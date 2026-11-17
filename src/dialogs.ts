@@ -22,7 +22,7 @@ export function accountMenu(p:AccountMenuProps):string{return menuMarkup(p.id,p.
 const menuBindings=new WeakMap<ParentNode,()=>void>();
 export function bindMenus(root:ParentNode):()=>void {
  menuBindings.get(root)?.();
- const controller=new AbortController(),signal=controller.signal;
+ const controller=new (root.querySelector("button")?.ownerDocument.defaultView?.AbortController??AbortController)(),signal=controller.signal;
  const cleanups:(()=>void)[]=[];
  for(const trigger of Array.from(root.querySelectorAll<HTMLButtonElement>("[data-fu-menu-toggle]"))){
  const doc=trigger.ownerDocument,win=doc.defaultView!,panel=doc.getElementById(trigger.getAttribute("aria-controls")??"");
@@ -39,11 +39,11 @@ export function bindMenus(root:ParentNode):()=>void {
  panel.style.top=Math.max(top+gap,Math.min(down?r.bottom+4:r.top-height-4,top+h-height-gap))+"px";
  };
  const close=(focus=false)=>{if(!opened)return;opened=false;if(native&&panel.matches(":popover-open"))panel.hidePopover();panel.hidden=true;trigger.setAttribute("aria-expanded","false");if(focus&&trigger.isConnected)trigger.focus();};
- const open=(last=false)=>{if(opened)return;opened=true;panel.hidden=false;trigger.setAttribute("aria-expanded","true");if(native){panel.setAttribute("popover","manual");panel.showPopover();}else{panel.style.zIndex="10000";}position();const list=items();(last?list[list.length-1]:list[0])?.focus();};
+ const open=(last=false)=>{if(opened)return;opened=true;panel.hidden=false;trigger.setAttribute("aria-expanded","true");if(native){panel.setAttribute("popover","manual");panel.showPopover();}else{panel.setAttribute("data-fu-positioned","");}position();const list=items();(last?list[list.length-1]:list[0])?.focus();};
  trigger.addEventListener("click",()=>opened?close(true):open(),{signal});
  trigger.addEventListener("keydown",ev=>{if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){ev.preventDefault();open(ev.key==="ArrowUp");}},{signal});
  panel.addEventListener("keydown",ev=>{const list=items(),i=list.indexOf(doc.activeElement as HTMLButtonElement);if(ev.key==="Escape"){ev.preventDefault();close(true);}else if(ev.key==="Tab"){close(true);}else if(["ArrowDown","ArrowUp","Home","End"].includes(ev.key)){ev.preventDefault();const n=ev.key==="Home"?0:ev.key==="End"?list.length-1:(i+(ev.key==="ArrowDown"?1:-1)+list.length)%list.length;list[n]?.focus();}},{signal});
- panel.addEventListener("click",ev=>{if((ev.target as Element).closest('[data-fu-action]:not(:disabled)'))close(true);},{signal});
+ panel.addEventListener("click",ev=>{if((ev.target as Element).closest('[data-fu-action]:not(:disabled)'))close(true);},{signal,capture:true});
  doc.addEventListener("pointerdown",ev=>{if(opened&&!trigger.contains(ev.target as Node)&&!panel.contains(ev.target as Node))close();},{signal,capture:true});
  doc.addEventListener("keydown",ev=>{if(opened&&ev.key==="Escape")close(true);},{signal});
  win.addEventListener("resize",position,{signal});win.addEventListener("scroll",position,{signal,capture:true});win.visualViewport?.addEventListener("resize",position,{signal});win.visualViewport?.addEventListener("scroll",position,{signal});
