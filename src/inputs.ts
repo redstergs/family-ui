@@ -56,7 +56,7 @@ export function bindInputs(root:ParentNode):()=>void {
  const decode=<T>(raw:string|undefined,fallback:T):T=>{try{return raw===undefined?fallback:JSON.parse(raw) as T;}catch{return fallback;}};
  const base=decode<StepPolicy>(el.dataset.policy,[]), units=decode<Record<string,StepPolicy>>(el.dataset.unitPolicies,{}),repeat=repeatBands(decode<RepeatPolicy|null>(el.dataset.repeat,null)??undefined);
  const validate=()=>input.setAttribute("aria-invalid",String(numberValue(el)===null));
- const write=(n:number)=>{if(input.matches(":disabled"))return false;const value=String(Math.min(Number(el.dataset.max),Math.max(Number(el.dataset.min),n)));if(value===input.value)return false;input.value=value;notify(input,"input");notify(input,"change");return true;};
+ const write=(n:number)=>{if(input.matches(":disabled"))return false;const value=String(Math.min(Number(el.dataset.max),Math.max(Number(el.dataset.min),n)));const changed=value!==input.value;input.value=value;notify(input,"input");notify(input,"change");return changed;};
  input.addEventListener("focus",()=>input.select(),{signal});input.addEventListener("input",validate,{signal});input.addEventListener("blur",validate,{signal});
  const step=(dir:number)=>{
  if(input.matches(":disabled")||!input.isConnected)return false;
