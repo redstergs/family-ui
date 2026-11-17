@@ -29,3 +29,6 @@
 .fu-disclosure-section__title small { color:var(--fu-text-muted); font-weight:400; }
 .fu-disclosure-section__media { flex:none; display:grid; place-items:center; }
 .fu-disclosure-section__actions { display:flex; flex-wrap:wrap; gap:var(--fu-space-2); padding:var(--fu-space-2); max-width:100%; box-sizing:border-box; }
+
+.fu-selection-controls { display:flex; flex-wrap:wrap; align-items:center; gap:var(--fu-space-2); }
+.fu-week-selector > .fu-period-navigator__extras { justify-content:center; margin-block:var(--fu-space-2); }
