@@ -43,3 +43,14 @@
 
 .fu-action-menu__items[hidden] { display:none; }
 .fu-dialog--structured { box-sizing:border-box; }
+
+.fu-action-menu__items[popover],.fu-action-menu__items[data-fu-positioned] { position:fixed; inset:auto; margin:0; box-sizing:border-box; min-width:0; width:max-content; overflow:auto; overscroll-behavior:contain; color:var(--fu-text); z-index:10000; }
+.fu-action-menu__item { white-space:normal; overflow-wrap:anywhere; }
+.fu-action-menu__item svg { flex:none; }
+.fu-action-menu__items hr { border:0; border-top:1px solid var(--fu-border); margin:var(--fu-space-1); }
+.fu-account-menu__trigger { display:flex; align-items:center; gap:var(--fu-space-2); text-align:start; padding:var(--fu-space-2); max-width:100%; }
+.fu-account-menu__avatar { display:grid; place-items:center; border-radius:50%; width:36px; height:36px; flex:none; overflow:hidden; background:var(--fu-surface-soft); }
+.fu-account-menu__avatar img { width:100%; height:100%; object-fit:cover; }
+.fu-account-menu__name { display:grid; min-width:0; overflow-wrap:anywhere; }
+.fu-account-menu__name small { color:var(--fu-text-muted); }
+.fu-account-menu__trigger[aria-expanded="true"] > svg:last-child { transform:rotate(180deg); }
