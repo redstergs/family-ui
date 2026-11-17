@@ -59,3 +59,7 @@ Use [workflows.md](workflows.md) for the additive CSS/HTML contract. Consumer ow
 ## Contextual editing dialogs
 
 See [dialog components](dialogs.md) for generic contextual actions, native dialogs, participant, weekday and slot selection, and conflict decisions.
+
+## Numeric inputs and disclosure controls
+
+Import helpers from `@redstergs/family-ui/inputs`; see [inputs.md](inputs.md). The consumer owns domain validation and persistence. The existing actionMenu uses the vertical ellipsis; navigation continues to use the right chevron.
