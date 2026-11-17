@@ -7,7 +7,7 @@ export const legacyRepeat:RepeatPolicy=[{afterMs:400,intervalMs:85}];
 export function stepValue(value:number,direction:number,fallback:number,policy?:StepPolicy,min=-Infinity,max=Infinity):number {
  const bands=(policy??[]).filter(b=>Number.isFinite(b.from)&&Number.isFinite(b.step)&&b.step>0).slice().sort((a,b)=>a.from-b.from);
  const dir=direction<0?-1:1;
- const index=bands.findLastIndex(b=>dir>0?value>=b.from:value>b.from);
+ let index=-1;for(let i=0;i<bands.length;i++)if(dir>0?value>=bands[i].from:value>bands[i].from)index=i;
  const step=index>=0?bands[index].step:Number.isFinite(fallback)&&fallback>0?fallback:1;
  let next=Number((value+dir*step).toPrecision(12));
  // Stop at a crossed band boundary so adjacent bands cannot skip it.
