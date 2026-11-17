@@ -92,3 +92,7 @@ ProcessStepper, WorkflowHeader, TaskList, ProgressChecklist, WorkflowSummary and
 ## Contextual editing dialogs
 
 See [dialog components](docs/dialogs.md) for generic contextual actions, native dialogs, participant, weekday and slot selection, and conflict decisions.
+
+## Numeric inputs and disclosures
+
+NumberInput, QuantityInput, DurationInput, DisclosureButton and DisclosureSection, plus the vertical action-menu convention. See [input contracts](docs/inputs.md) and the interactive catalog “Eingaben & aufklappbare Inhalte”.
