@@ -96,3 +96,7 @@ See [dialog components](docs/dialogs.md) for generic contextual actions, native 
 ## Numeric inputs and disclosures
 
 NumberInput, QuantityInput, DurationInput, DisclosureButton and DisclosureSection, plus the vertical action-menu convention. See [input contracts](docs/inputs.md) and the interactive catalog “Eingaben & aufklappbare Inhalte”.
+
+## 0.4.0
+
+Shared action and account menus, text disclosures, responsive section actions and ProcessStepper preview integration. See [integration](docs/integration.md) for bindings and migration.
