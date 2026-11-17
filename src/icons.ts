@@ -9,10 +9,16 @@ export const familyIconNames = [
   "house", "calendar-days", "book-open", "shopping-basket",
   "users", "settings", "layout-dashboard", "list", "refresh-cw", "thumbs-up", "thumbs-down", "message-circle", "check", "circle", "circle-dot", "clock", "lock", "circle-alert", "arrow-right", "chatgpt"
 , "ellipsis", "chevron-left", "chevron-right", "x", "calendar-x", "calendar-arrow-right", "arrow-left-right", "replace", "coffee", "moon", "apple"
+, "plus", "minus", "chevron-down", "chevron-up", "ellipsis-vertical"
 ] as const;
 export type FamilyIconName = (typeof familyIconNames)[number];
 
 const paths: Record<FamilyIconName, string> = {
+ "plus": '<path d="M12 5v14M5 12h14"/>',
+ "minus": '<path d="M5 12h14"/>',
+ "chevron-down": '<path d="m6 9 6 6 6-6"/>',
+ "chevron-up": '<path d="m6 15 6-6 6 6"/>',
+ "ellipsis-vertical": '<circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>',
   "ellipsis": '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
   "chevron-left": '<path d="m15 18-6-6 6-6"/>',
   "chevron-right": '<path d="m9 18 6-6-6-6"/>',
