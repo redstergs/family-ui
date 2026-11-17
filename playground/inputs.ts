@@ -1,5 +1,6 @@
 import {numberInput,quantityInput,durationInput,disclosureButton,disclosureSection,bindInputs,bindDisclosures,durationValue} from "../src/inputs";
-import {actionMenu} from "../src/dialogs";
+import {actionMenu,accountMenu,bindMenus} from "../src/dialogs";
+import {familyIcon,familyIconNames} from "../src/icons";
 export function inputsExample():string {
  return '<section id="input-example" class="fu-section fu-stack"><h2>Eingaben &amp; aufklappbare Inhalte</h2>'+
  numberInput({id:"demo-number",label:"Anzahl",value:2,min:1,max:20,integer:true})+
@@ -11,7 +12,13 @@ export function inputsExample():string {
  '<output id="demo-duration-result" aria-live="polite">1530 s</output>'+
  '<div class="fu-row">Zutaten '+disclosureButton({id:"demo-ingredients",label:"Zutaten ein- oder ausblenden"})+'</div><div id="demo-ingredients" hidden>350 g Nudeln</div>'+
  '<div class="fu-stack" data-fu-accordion>'+disclosureSection({id:"demo-section-a",label:"Zubereitung",expanded:true},"Gemüse schneiden")+disclosureSection({id:"demo-section-b",label:"Nährwerte"},"520 kcal")+'</div>'+
- actionMenu("demo-input-menu","Weitere Aktionen",[{id:"edit",label:"Bearbeiten"},{id:"copy",label:"Kopieren"}])+'<output id="demo-menu-result"></output></section>';
+ actionMenu("demo-input-menu","Weitere Aktionen",[{id:"edit",label:"Bearbeiten"},{id:"copy",label:"Kopieren"}])+'<output id="demo-menu-result"></output>'+
+ '<h3>Disclosure und Konto</h3>'+disclosureSection({id:"recipe-detail",label:"Mediterrane Ofengemüse-Bowl mit Kichererbsen und Zitronendressing",media:familyIcon("utensils"),metadata:"45 Minuten · 3 Portionen",status:"Geplant",actions:'<button class="fu-button" data-demo-action="Kochmodus">Kochmodus starten</button>'+actionMenu("recipe-menu","Rezeptaktionen",[{id:"edit",label:"Bearbeiten",icon:"pencil"}])},"Zutaten und Zubereitung")+
+ disclosureButton({id:"participants-demo",label:"Teilnehmer ändern",text:"Teilnehmer ändern"})+'<div id="participants-demo" hidden>Teilnehmer auswählen</div>'+
+ accountMenu({id:"account-desktop",label:"Benutzerkonto",name:"Alex",secondary:"Familienmitglied",initials:"A",items:[{id:"profile",label:"Profil",icon:"user-round"},{id:"keys",label:"Passkeys",icon:"key-round"},{id:"admin",label:"Verwaltung",disabled:true},{id:"logout",label:"Abmelden",icon:"log-out",group:"session"}]})+
+ accountMenu({id:"account-mobile",label:"Kompaktes Konto",name:"Alex",compact:true,items:[{id:"profile",label:"Profil"}]})+
+ '<div style="position:relative;height:100px;overflow:hidden">'+actionMenu("clipped-menu","Menü im Scrollcontainer",[{id:"edit",label:"Bearbeiten"},{id:"copy",label:"Kopieren"}])+'</div>'+
+ '<div style="display:flex;flex-wrap:wrap;gap:12px">'+familyIconNames.map(n=>'<span>'+familyIcon(n)+' '+n+'</span>').join("")+'</div></section>';
 }
 export function bindInputExample(doc:Document):void {
  const root=doc.getElementById("input-example");if(!root)return;
@@ -19,10 +26,6 @@ export function bindInputExample(doc:Document):void {
  const timer=root.querySelectorAll("[data-fu-duration]")[3],output=doc.getElementById("demo-duration-result")!;
  const update=()=>{const n=durationValue(timer);output.textContent=n===null?"Ungültige Dauer":n+" s";};
  root.addEventListener("input",update);root.addEventListener("change",update);
- const toggle=root.querySelector<HTMLButtonElement>("[data-fu-menu-toggle]")!,menu=doc.getElementById("demo-input-menu")!;
- const close=()=>{menu.hidden=true;toggle.setAttribute("aria-expanded","false");};
- toggle.onclick=()=>{menu.hidden=!menu.hidden;toggle.setAttribute("aria-expanded",String(!menu.hidden));};
- root.addEventListener("keydown",e=>{if(e.key==="Escape"&&!menu.hidden){close();toggle.focus();}});
- doc.addEventListener("click",e=>{if(!e.composedPath().includes(menu)&&!e.composedPath().includes(toggle))close();});
- for(const b of Array.from(menu.querySelectorAll<HTMLButtonElement>("button")))b.onclick=()=>{doc.getElementById("demo-menu-result")!.textContent=b.textContent;close();toggle.focus();};
+ bindMenus(root);
+ root.addEventListener("click",e=>{const b=(e.target as Element).closest<HTMLElement>("[data-fu-action],[data-demo-action]");if(b)doc.getElementById("demo-menu-result")!.textContent=b.textContent;});
 }
