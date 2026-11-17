@@ -1,5 +1,5 @@
 
-import { actionMenu, contextItem, personSelector, weekDaySelector, slotSelector, conflictActions, structuredDialog } from "../src/dialogs";
+import { bindMenus, actionMenu, contextItem, personSelector, weekDaySelector, slotSelector, conflictActions, structuredDialog } from "../src/dialogs";
 import type { FamilyIconName } from "../src/icons";
 const slots: {id:string;label:string;icon:FamilyIconName}[]=[{id:"breakfast",label:"Frühstück",icon:"coffee"},{id:"snack",label:"Snack",icon:"apple"},{id:"lunch",label:"Mittagessen",icon:"utensils"},{id:"dinner",label:"Abendessen",icon:"moon"}];
 const people=["Alex","Sam","Kim"];
@@ -22,17 +22,11 @@ export function bindMealEdit(doc:Document){
  let dialog:HTMLDialogElement|null=null;
  function render(focusId?:string){
   host!.innerHTML='<h2>Mahlzeiten bearbeiten</h2><p class="fu-context__meta">Fiktive Beispieldaten · Heute: 17. November 2026</p><button class="fu-button fu-button--secondary" id="meal-reset">Zurücksetzen</button>'+meals.map(m=>'<article class="fu-panel fu-row fu-row--between">'+context(m)+'<div>'+actionMenu("menu-"+m.id,"Aktionen für "+m.title,[{id:"people",label:"Teilnehmer ändern",icon:"users"},{id:"move",label:"Mahlzeit verschieben",icon:"calendar-arrow-right"},{id:"skip",label:"Mahlzeit ausfallen lassen",icon:"calendar-x"}])+'<p class="fu-context__meta">'+(m.people.join(", ")||"Keine Teilnehmer")+'</p></div></article>').join("")+'<p role="status" id="meal-status">'+message+'</p><div id="meal-dialog-host"></div>';
-  host!.querySelectorAll<HTMLButtonElement>("[data-fu-menu-toggle]").forEach(b=>{
-   const menu=doc.getElementById(b.getAttribute("aria-controls")!)!;
-   b.onclick=()=>{const open=menu.hidden;closeMenus();menu.hidden=!open;b.setAttribute("aria-expanded",String(open));};
-   menu.querySelectorAll<HTMLButtonElement>("[data-fu-action]").forEach(a=>a.onclick=()=>{active=menu.id.slice(5);closeMenus();open(a.dataset.fuAction!);});
-  });
+  bindMenus(host!);
+  host!.querySelectorAll<HTMLButtonElement>(".fu-action-menu__items [data-fu-action]").forEach(a=>a.onclick=()=>{active=a.closest(".fu-action-menu__items")!.id.slice(5);open(a.dataset.fuAction!);});
   doc.getElementById("meal-reset")!.onclick=()=>{meals=initial();message="Beispieldaten zurückgesetzt";render("meal-reset")};
   if(focusId)doc.getElementById(focusId)?.focus();
  }
- function closeMenus(){host!.querySelectorAll<HTMLButtonElement>("[data-fu-menu-toggle]").forEach(b=>{b.setAttribute("aria-expanded","false");doc.getElementById(b.getAttribute("aria-controls")!)!.hidden=true;})}
- doc.addEventListener("click",e=>{if(!(e.target as Element).closest(".fu-action-menu"))closeMenus()});
- doc.addEventListener("keydown",e=>{if(e.key==="Escape"&&!dialog){const b=host!.querySelector<HTMLButtonElement>('[data-fu-menu-toggle][aria-expanded="true"]');closeMenus();b?.focus()}});
  function restore(){host!.querySelector<HTMLButtonElement>('[aria-controls="menu-'+active+'"]')?.focus();}
  function mount(title:string,body:string,confirmLabel?:string,confirmDisabled=false,danger=false,onConfirm?:()=>void){
   const h=doc.getElementById("meal-dialog-host")!;
