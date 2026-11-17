@@ -8,5 +8,5 @@ test("direct numeric input, duration and disclosure",async({page})=>{
  await f.locator("#demo-timer-seconds").fill("60");await expect(f.locator("#demo-duration-result")).toHaveText("Ungültige Dauer");
  await f.getByRole("button",{name:"Zutaten ein- oder ausblenden"}).click();await expect(f.locator("#demo-ingredients")).toBeVisible();
  await f.getByRole("button",{name:"Nährwerte"}).click();await expect(f.locator("#demo-section-a")).toBeHidden();await expect(f.locator("#demo-section-b")).toBeVisible();
- await f.getByRole("button",{name:"Weitere Aktionen"}).click();await f.getByRole("button",{name:"Kopieren"}).click();await expect(f.locator("#demo-menu-result")).toHaveText("Kopieren");
+ await f.getByRole("button",{name:"Weitere Aktionen"}).click();await f.getByRole("menuitem",{name:"Kopieren"}).click();await expect(f.locator("#demo-menu-result")).toHaveText("Kopieren");
 });
