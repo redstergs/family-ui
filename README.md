@@ -104,3 +104,7 @@ Shared action and account menus, text disclosures, responsive section actions an
 ## Adaptive input and navigation (unreleased)
 
 Opt-in adaptive steps, repeat policies, duration carry and corrections, period jumps and bulk selection. Existing fixed-step and duration picker contracts remain available. See [adaptive input integration](docs/adaptive-inputs.md).
+
+### Responsive navigation overflow
+
+Opt-in: import `bindNavigationOverflow` from `./src/navigation`. Pass the navigation element containing `button[data-page]` and options `{icon: familyIcon("ellipsis"), label: "Mehr", compactQuery, itemWidth}`. The application owns navigation and sets `aria-current="page"`, then dispatches `nav-active-change` on the navigation element. Call the returned cleanup when unmounting. Existing navigation remains unchanged unless bound.
