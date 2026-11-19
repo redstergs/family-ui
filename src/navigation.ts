@@ -7,7 +7,7 @@ export function bindNavigationOverflow(nav:HTMLElement, options:{icon:string; la
   trigger.innerHTML='<span class="fu-nav__icon">'+options.icon+'</span><span class="fu-nav__label"></span>';trigger.querySelector(".fu-nav__label")!.textContent=options.label??"Mehr";
   const panel=document.createElement("div");panel.id="fu-nav-overflow-"+(++nextOverflowId);panel.className="nav-overflow-panel";panel.hidden=true;trigger.setAttribute("aria-controls",panel.id);
   nav.appendChild(trigger);nav.appendChild(panel);
-  const narrow=matchMedia(options.compactQuery??"(max-width:740px)");
+  const narrow=matchMedia(options.compactQuery??"(max-width:599px), (orientation:landscape) and (max-height:550px) and (max-width:1200px)");
   const close=()=>{panel.hidden=true;trigger.setAttribute("aria-expanded","false");};
   const active=()=>{trigger.classList.toggle("active",!!panel.querySelector('[aria-current="page"]'));};
   let previous="";
@@ -19,6 +19,7 @@ export function bindNavigationOverflow(nav:HTMLElement, options:{icon:string; la
     items.forEach((item,i)=>{if(i<count)nav.insertBefore(item,trigger);else panel.appendChild(item);});
     trigger.hidden=count===items.length;
     nav.style.gridTemplateColumns=narrow.matches?"repeat("+Math.min(items.length,capacity)+",minmax(0,1fr))":"";
+    nav.classList.toggle("fu-nav--overflow-compact",narrow.matches);
     close();active();
   };
   trigger.onclick=()=>{if(!panel.hidden)close();else{panel.hidden=false;trigger.setAttribute("aria-expanded","true");}};
@@ -29,5 +30,5 @@ export function bindNavigationOverflow(nav:HTMLElement, options:{icon:string; la
   document.addEventListener("pointerdown",outside);document.addEventListener("keydown",key);
   narrow.addEventListener("change",layout);
   const observer=new ResizeObserver(()=>layout());observer.observe(nav);layout();
-  return ()=>{observer.disconnect();narrow.removeEventListener("change",layout);document.removeEventListener("pointerdown",outside);document.removeEventListener("keydown",key);nav.removeEventListener("nav-active-change",changed);items.forEach(item=>nav.insertBefore(item,trigger));trigger.remove();panel.remove();nav.style.gridTemplateColumns=originalColumns;};
+  return ()=>{observer.disconnect();narrow.removeEventListener("change",layout);document.removeEventListener("pointerdown",outside);document.removeEventListener("keydown",key);nav.removeEventListener("nav-active-change",changed);items.forEach(item=>nav.insertBefore(item,trigger));trigger.remove();panel.remove();nav.style.gridTemplateColumns=originalColumns;nav.classList.remove("fu-nav--overflow-compact");};
 }
