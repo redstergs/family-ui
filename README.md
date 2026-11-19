@@ -108,3 +108,7 @@ Opt-in adaptive steps, repeat policies, duration carry and corrections, period j
 ### Responsive navigation overflow
 
 Opt-in: import `bindNavigationOverflow` from `./src/navigation`. Pass the navigation element containing `button[data-page]` and options `{icon: familyIcon("ellipsis"), label: "Mehr", compactQuery, itemWidth}`. The application owns navigation and sets `aria-current="page"`, then dispatches `nav-active-change` on the navigation element. Call the returned cleanup when unmounting. Existing navigation remains unchanged unless bound.
+
+## MetricGroup (EP5G2)
+
+Generic metric groups, primary and secondary values, units and visible states. See [metric contracts](docs/metrics.md).

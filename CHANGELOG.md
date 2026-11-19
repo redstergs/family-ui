@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add generic MetricGroup and MetricItem with responsive layout, optional primary metric, explicit unknown/status presentation, showcase and contracts.
+
 ## 0.4.0
 
 - Shared popover and account menu, keyboard interaction, responsive disclosure headers, labeled toggles and nine icons.

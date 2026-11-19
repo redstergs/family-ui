@@ -73,3 +73,7 @@ Import `disclosureButton`, `disclosureSection`, `bindDisclosures` from `@redster
 ## Adaptive input and navigation (unreleased)
 
 Opt-in adaptive steps, repeat policies, duration carry and corrections, period jumps and bulk selection. Existing fixed-step and duration picker contracts remain available. See [adaptive input integration](adaptive-inputs.md).
+
+## MetricGroup
+
+Opt-in presentation for arbitrary metrics. See [metric contracts](metrics.md). Existing markup is unchanged.

@@ -1,0 +1,13 @@
+/* MetricGroup / MetricItem: opt-in, presentation only. */
+.fu-metric-group {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%, 76px),1fr));gap:var(--fu-space-3);margin:0;min-width:0;color:var(--fu-text)}
+.fu-metric-item {display:flex;flex-direction:column;gap:var(--fu-space-1);min-width:0;overflow-wrap:anywhere}
+.fu-metric-item__label {font-size:var(--fu-font-sm);color:var(--fu-text-muted);order:1}
+.fu-metric-item__value {margin:0;font-size:var(--fu-font-lg);font-weight:var(--fu-weight-semibold);line-height:var(--fu-leading-heading);font-variant-numeric:tabular-nums;min-width:0}
+.fu-metric-item__unit {font-size:var(--fu-font-sm);font-weight:var(--fu-weight-medium);color:var(--fu-text-muted)}
+.fu-metric-item__status {display:block;font-size:var(--fu-font-sm);font-weight:var(--fu-weight-medium)}
+.fu-metric-item--primary {grid-column:1/-1;padding-bottom:var(--fu-space-3);border-bottom:1px solid var(--fu-border)}
+.fu-metric-item--primary .fu-metric-item__value {font-size:var(--fu-font-xl);font-weight:var(--fu-weight-heading)}
+.fu-metric-item[data-state="unknown"] .fu-metric-item__value {color:var(--fu-text-muted)}
+.fu-metric-item[data-state="success"] .fu-metric-item__status {color:var(--fu-success)}
+.fu-metric-item[data-state="warning"] .fu-metric-item__status {color:var(--fu-warning)}
+.fu-metric-item[data-state="error"] .fu-metric-item__status {color:var(--fu-danger)}
