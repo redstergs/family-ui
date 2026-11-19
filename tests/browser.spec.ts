@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 const themes=["food","door","mcp","workout"];
 const modes=["light","dark"];
-const categories=["inputs","workflows","reactions","foundation","layout","components","action-list","cards","feedback","planning"];
+const categories=["metrics","inputs","workflows","reactions","foundation","layout","components","action-list","cards","feedback","planning"];
 for(const theme of themes) for(const mode of modes) {
  test(theme+" / "+mode+" responsive catalog",async({page})=>{
   await page.goto("/");
@@ -254,4 +254,19 @@ test("responsive navigation keeps hidden destinations reachable",async({page})=>
  await expect(more).toHaveClass(/active/);
  await page.setViewportSize({width:1280,height:800});await expect(more).toBeHidden();
  await expect(nav.getByRole("button",{name:"Einkauf",exact:true})).toHaveAttribute("aria-current","page");
+});
+
+test("MetricGroup preserves zero, unknown and primary hierarchy",async({page})=>{
+ await page.goto("/");
+ await page.locator("#showcase-toggle").click();
+ await page.locator("#showcase-section").selectOption("metrics");
+ const frame=page.frameLocator("#showcase-frame");
+ await expect(frame.locator("dl.fu-metric-group")).toHaveCount(3);
+ await expect(frame.locator(".fu-metric-item--primary")).toHaveCount(3);
+ await expect(frame.locator('.fu-metric-item[data-state="unknown"] dd')).toContainText("Nicht verfügbar");
+ await expect(frame.locator('.fu-metric-item[data-state="unknown"] dd')).toContainText("—");
+ await expect(frame.locator(".fu-metric-group").last().locator("dd").nth(2)).toHaveText("0 m");
+ const primary=frame.locator(".fu-metric-item--primary dd").first();
+ const secondary=frame.locator(".fu-metric-item:not(.fu-metric-item--primary) dd").first();
+ expect(await primary.evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThan(await secondary.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)));
 });

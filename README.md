@@ -11,7 +11,7 @@ Other applications are outside the current scope. Family UI contains presentatio
 
 ## Status
 
-**Version 0.3.0 — workspace components.** The workspace design has been accepted and the pre-release automated tests have passed. This is a pre-1.0 library, not a promise of permanent API stability. Existing consumers upgrade independently; the revision does not automatically migrate any application.
+**Version 0.5.0 — generic metrics and adaptive controls.** This is a pre-1.0 library, not a promise of permanent API stability. Existing consumers upgrade independently; the revision does not automatically migrate any application.
 
 - [Live component showcase](https://redstergs.github.io/family-ui/)
 - [GitHub releases](https://github.com/redstergs/family-ui/releases)
@@ -76,7 +76,7 @@ Applications adopt pinned versions at build time. No runtime CDN, shared service
 
 ## Development and releases
 
-Small teams may commit directly to `main`. GitHub Actions installs dependencies, runs TypeScript and static tests, builds the site, and runs Chromium tests on Ubuntu 24.04. GitHub Pages is deployed only after a successful build job. The current workflow creates the GitHub release `v0.3.0` once after successful deployment; subsequent releases require explicit version/release workflow updates. Existing releases must not be moved or overwritten.
+Small teams may commit directly to `main`. GitHub Actions installs dependencies, runs TypeScript and static tests, builds the site, and runs Chromium tests on Ubuntu 24.04. GitHub Pages is deployed only after a successful build job. The current workflow creates the GitHub release `v0.5.0` once after successful deployment; subsequent releases require explicit version/release workflow updates. Existing releases must not be moved or overwritten.
 
 A showcase deployment does not update any consumer. See [integration.md](docs/integration.md) for the adoption process.
 
@@ -101,7 +101,7 @@ NumberInput, QuantityInput, DurationInput, DisclosureButton and DisclosureSectio
 
 Shared action and account menus, text disclosures, responsive section actions and ProcessStepper preview integration. See [integration](docs/integration.md) for bindings and migration.
 
-## Adaptive input and navigation (unreleased)
+## Adaptive input and navigation (0.5.0)
 
 Opt-in adaptive steps, repeat policies, duration carry and corrections, period jumps and bulk selection. Existing fixed-step and duration picker contracts remain available. See [adaptive input integration](docs/adaptive-inputs.md).
 

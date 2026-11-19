@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.5.0
 
+- Add adaptive input and navigation contracts, including responsive navigation overflow.
 - Add generic MetricGroup and MetricItem with responsive layout, optional primary metric, explicit unknown/status presentation, showcase and contracts.
 
 ## 0.4.0

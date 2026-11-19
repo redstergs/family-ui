@@ -1,5 +1,5 @@
 name: Family UI Pages
-# CI rerun requested for the 0.4.0 release
+# Release 0.5.0 after successful checks and Pages deployment
 
 on:
   push:
@@ -59,11 +59,11 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v5
-      - name: Publish tested 0.4.0 release once
+      - name: Publish tested 0.5.0 release once
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           version=$(node -p "require('./package.json').version")
-          if [ "$version" != "0.4.0" ]; then exit 0; fi
+          if [ "$version" != "0.5.0" ]; then exit 0; fi
           if gh release view "v$version" >/dev/null 2>&1; then exit 0; fi
-          gh release create "v$version" --target "$GITHUB_SHA" --title "Family UI $version" --notes "Shared popover and account menus, disclosures and workflow components. See CHANGELOG.md and docs/integration.md."
+          gh release create "v$version" --target "$GITHUB_SHA" --title "Family UI $version" --notes "Generic MetricGroup and MetricItem, adaptive inputs and responsive navigation overflow. See CHANGELOG.md and docs/integration.md."
