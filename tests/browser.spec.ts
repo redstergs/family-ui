@@ -243,3 +243,15 @@ test("shared account menu and independent disclosure actions",async({page})=>{
  await f.locator("#clipped-menu").getByRole("menuitem",{name:"Kopieren"}).click();
  await expect(clipped).toBeFocused();
 });
+
+test("responsive navigation keeps hidden destinations reachable",async({page})=>{
+ await page.setViewportSize({width:320,height:844});await page.goto("/");
+ const nav=page.locator(".fu-nav").first();const more=nav.getByRole("button",{name:"Mehr",exact:true});
+ await expect(more).toBeVisible();await more.click();
+ await expect(more).toHaveAttribute("aria-expanded","true");
+ await page.keyboard.press("Escape");await expect(more).toHaveAttribute("aria-expanded","false");
+ await more.click();await nav.getByRole("button",{name:"Einkauf",exact:true}).click();
+ await expect(more).toHaveClass(/active/);
+ await page.setViewportSize({width:1280,height:800});await expect(more).toBeHidden();
+ await expect(nav.getByRole("button",{name:"Einkauf",exact:true})).toHaveAttribute("aria-current","page");
+});
