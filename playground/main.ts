@@ -1,4 +1,5 @@
 import "../src/index.css";
+import {bindNavigationOverflow} from "../src/navigation";
 import { installShowcase } from "./showcase";
 import { familyIcon, type FamilyIconName } from "../src/icons";
 type Theme = "food" | "door" | "mcp" | "workout";
@@ -12,7 +13,9 @@ const themes: Record<Theme, {name:string; icon:FamilyIconName; actionIcon:Family
 const root=document.querySelector<HTMLDivElement>("#app");
 if(!root) throw new Error("Playground root missing");
 let theme:Theme="food", mode:Mode=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light", page=0;
+let cleanupNavigation:(()=>void)|undefined;
 function show() {
+ cleanupNavigation?.();
  if(!root)return;
  const current=themes[theme]; root.className="fu-app"; root.dataset.fuTheme=theme; root.dataset.fuMode=mode;
  const option=(id:string,label:string,active:boolean)=>"<option value=\""+id+"\""+(active?" selected":"")+">"+label+"</option>";
@@ -22,7 +25,7 @@ function show() {
  (Object.keys(themes) as Theme[]).map(k=>option(k,themes[k].name.replace("Family ",""),theme===k)).join("")+"</select></div>"+
  "<div class=\"fu-toolbar__field\"><label for=\"mode\">Modus</label><select class=\"fu-field__control\" id=\"mode\">"+option("light","Hell",mode==="light")+option("dark","Dunkel",mode==="dark")+"</select></div></div></header>"+
  "<div class=\"fu-shell-body\"><nav class=\"fu-nav\" style=\"--fu-nav-count:"+current.nav.length+"\" aria-label=\"Hauptnavigation\">"+
- current.nav.map((item,i)=>"<button type=\"button\" class=\"fu-nav__link\" data-section=\""+i+"\" "+(page===i?"aria-current=\"page\"":"")+"><span class=\"fu-nav__icon\" aria-hidden=\"true\">"+familyIcon(item.icon)+"</span><span class=\"fu-nav__label\">"+item.label+"</span></button>").join("")+"</nav>"+
+ current.nav.map((item,i)=>"<button type=\"button\" class=\"fu-nav__link\" data-page=\""+i+"\" data-section=\""+i+"\" "+(page===i?"aria-current=\"page\"":"")+"><span class=\"fu-nav__icon\" aria-hidden=\"true\">"+familyIcon(item.icon)+"</span><span class=\"fu-nav__label\">"+item.label+"</span></button>").join("")+"</nav>"+
  "<main class=\"fu-page-layout\"><div class=\"fu-page-layout__inner fu-stack\"><header class=\"fu-page-layout__header\"><p class=\"fu-page-layout__eyebrow\">Family UI · Demo</p><h1 class=\"fu-page-layout__title\">"+current.nav[page].label+"</h1><p class=\"fu-page-layout__intro\">Vier Identitäten, ein Designsystem.</p></header>"+
  "<section class=\"fu-panel fu-stack\"><h2>Große Hauptaktion</h2><div style=\"display:flex;justify-content:center\"><button class=\"fu-primary-action\" id=\"action\"><span class=\"fu-primary-action__icon\" aria-hidden=\"true\">"+familyIcon(current.actionIcon)+"</span><span class=\"fu-primary-action__label\">"+current.action+"</span></button></div><p class=\"fu-field__hint\">Keine reale Türsteuerung, API-Verbindung oder Trainingsaktion.</p></section>"+
  "<section class=\"fu-panel fu-stack\"><h2>Eingaben und Dialoge</h2><div class=\"fu-field\"><label class=\"fu-field__label\" for=\"entry\">Bezeichnung *</label><input class=\"fu-field__control\" id=\"entry\" placeholder=\"Mein Eintrag\" aria-describedby=\"hint error\"><span class=\"fu-field__hint\" id=\"hint\">Beschriftungen bleiben immer sichtbar.</span><span class=\"fu-field__error\" id=\"error\" hidden>Bitte eine Bezeichnung eingeben.</span></div><label class=\"fu-check\"><input type=\"checkbox\" checked>In Übersicht anzeigen</label><div class=\"fu-row\" style=\"flex-wrap:wrap\"><button class=\"fu-button\" id=\"validate\">Prüfen</button><button class=\"fu-button fu-button--secondary\" id=\"edit\">Dialog</button><button class=\"fu-button fu-button--danger\" id=\"delete\">Löschen …</button></div></section>"+
@@ -35,6 +38,7 @@ function show() {
  const message=(s:string)=>{get<HTMLElement>("feedback").textContent=s;};
  get<HTMLSelectElement>("theme").onchange=e=>{theme=(e.currentTarget as HTMLSelectElement).value as Theme; page=0; show();};
  get<HTMLSelectElement>("mode").onchange=e=>{mode=(e.currentTarget as HTMLSelectElement).value as Mode; show();};
+ cleanupNavigation=bindNavigationOverflow(root.querySelector<HTMLElement>(".fu-nav")!,{icon:familyIcon("ellipsis")});
  root.querySelectorAll<HTMLButtonElement>("[data-section]").forEach(b=>b.onclick=()=>{page=Number(b.dataset.section);show();});
  get("action").onclick=()=>message("Demo-Aktion ausgewählt. Nichts ausgeführt.");
  const items=get<HTMLElement>("demo-items"); const detail=get<HTMLElement>("demo-detail");
