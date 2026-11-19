@@ -19,7 +19,8 @@
     "./dialogs": "./src/dialogs.ts",
     "./icons": "./src/icons.ts",
     "./inputs": "./src/inputs.ts",
-    "./selection": "./src/selection.ts"
+    "./selection": "./src/selection.ts",
+    "./navigation": "./src/navigation.ts"
   },
   "devDependencies": {
     "typescript": "^5.7.3",
