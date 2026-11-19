@@ -99,3 +99,5 @@ body { margin: 0; width: 100%; min-width: 0; max-width: 100%; overflow-x: clip; 
 .fu-nav .nav-overflow.active {color:var(--fu-accent-text);background:var(--fu-accent-soft);font-weight:750;}
 .fu-nav .nav-overflow-panel {position:absolute;bottom:100%;right:8px;width:min(250px,calc(100vw - 16px));background:var(--fu-surface);border:1px solid var(--fu-border);border-radius:var(--fu-radius-panel);padding:6px;box-shadow:0 8px 24px #0002;}
 .fu-nav .nav-overflow-panel .fu-nav__link {display:flex;justify-content:flex-start;gap:10px;padding:10px;font-size:14px;width:100%;}
+
+.fu-nav.fu-nav--overflow-compact {overflow:visible;}
