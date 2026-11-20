@@ -270,3 +270,14 @@ test("MetricGroup preserves zero, unknown and primary hierarchy",async({page})=>
  const secondary=frame.locator(".fu-metric-item:not(.fu-metric-item--primary) dd").first();
  expect(await primary.evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThan(await secondary.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)));
 });
+
+ test("retrospective OK is selectable and exclusive", async ({page}) => {
+ await page.goto("/");
+ await page.locator("#showcase-section").selectOption("reactions");
+ const frame=page.frameLocator("iframe").first();
+ const row=frame.locator('[data-reactions="meal-rating"]');
+ const ok=row.getByRole("button",{name:"OK",exact:true});
+ await ok.click(); await expect(ok).toHaveAttribute("aria-pressed","true");
+ await expect(row.locator('[data-vote][aria-pressed="true"]')).toHaveCount(1);
+ await ok.click(); await expect(ok).toHaveAttribute("aria-pressed","false");
+ });

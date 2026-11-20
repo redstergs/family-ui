@@ -16,7 +16,7 @@
 .fu-reaction:disabled { opacity: .55; cursor: not-allowed; }
 .fu-reaction__count { font-size: var(--fu-font-sm); font-weight: 650; }
 
-/* Neutral participation state, independent of accent or danger colors. */
+/* Neutral taste or participation state, independent of accent or danger colors. */
 .fu-reaction--neutral[aria-pressed="true"] {
   background: var(--fu-surface-soft); color: var(--fu-text);
   border-color: var(--fu-border-interactive); box-shadow: inset 0 0 0 1px var(--fu-border-interactive);

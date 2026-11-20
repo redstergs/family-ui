@@ -2,11 +2,11 @@ import { familyIcon, type FamilyIconName } from "../src/icons";
 
 function controls(id: string, selected = "", disabled = false, busy = false, count = 0, meal = false) {
   const options: [string, string, FamilyIconName][] = meal
-    ? [["liked", "Hat geschmeckt", "thumbs-up"], ["disliked", "Nicht mein Fall", "thumbs-down"], ["not-eaten", "Hab ich nicht gegessen", "utensils-off"]]
+    ? [["liked", "Hat geschmeckt", "thumbs-up"], ["neutral", "OK", "minus"], ["disliked", "Nicht mein Fall", "thumbs-down"], ["not-eaten", "Hab ich nicht gegessen", "utensils-off"]]
     : [["yes", "Zustimmen", "thumbs-up"], ["no", "Ablehnen", "thumbs-down"]];
   return `<div class="fu-reactions" data-reactions="${id}">
     <div class="fu-vote" role="group" aria-label="${meal ? 'Mahlzeitenbewertung' : 'Abstimmung'}" ${busy ? 'aria-busy="true"' : ''}>
-      ${options.map(([value, label, icon]) => `<button type="button" class="fu-reaction${value === 'not-eaten' ? ' fu-reaction--neutral' : ''}" data-vote="${value}" aria-label="${label}" title="${label}" aria-pressed="${selected === value}" ${disabled || busy ? 'disabled' : ''}>${familyIcon(icon)}<span class="fu-reaction__selected" aria-hidden="true">✓</span></button>`).join('')}
+      ${options.map(([value, label, icon]) => `<button type="button" class="fu-reaction${(value === 'not-eaten' || value === 'neutral') ? ' fu-reaction--neutral' : ''}" data-vote="${value}" aria-label="${label}" title="${label}" aria-pressed="${selected === value}" ${disabled || busy ? 'disabled' : ''}>${familyIcon(icon)}<span class="fu-reaction__selected" aria-hidden="true">✓</span></button>`).join('')}
     </div>
     <button type="button" class="fu-reaction" data-comments aria-label="${count ? count + ' Kommentare öffnen' : 'Kommentare öffnen'}" title="Kommentare öffnen" ${disabled ? 'disabled' : ''}>${familyIcon('message-circle')}${count ? `<span class="fu-reaction__count" aria-hidden="true">${count}</span>` : ''}</button>
   </div>`;
