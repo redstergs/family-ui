@@ -166,7 +166,7 @@ test("meal rating keeps not-eaten neutral and comments optional in every theme",
   await page.locator("#showcase-mode").selectOption(mode);
   const row = frame.locator('[data-reactions="meal-rating"]');
   const group = row.getByRole("group", {name: "Mahlzeitenbewertung"});
-  await expect(group.getByRole("button")).toHaveCount(3);
+  await expect(group.getByRole("button")).toHaveCount(4);
   const liked = group.getByRole("button", {name: "Hat geschmeckt", exact: true});
   const disliked = group.getByRole("button", {name: "Nicht mein Fall", exact: true});
   const skipped = group.getByRole("button", {name: "Hab ich nicht gegessen", exact: true});
@@ -273,8 +273,9 @@ test("MetricGroup preserves zero, unknown and primary hierarchy",async({page})=>
 
  test("retrospective OK is selectable and exclusive", async ({page}) => {
  await page.goto("/");
+ await page.locator("#showcase-toggle").click();
  await page.locator("#showcase-section").selectOption("reactions");
- const frame=page.frameLocator("iframe").first();
+ const frame=page.frameLocator("#showcase-frame");
  const row=frame.locator('[data-reactions="meal-rating"]');
  const ok=row.getByRole("button",{name:"OK",exact:true});
  await ok.click(); await expect(ok).toHaveAttribute("aria-pressed","true");
