@@ -1,0 +1,44 @@
+/* Additive task variants on the existing ActionList and workflow TaskList primitives. */
+.fu-task-list--unified { display:grid;gap:var(--fu-space-2);min-width:0; }
+.fu-task-list__heading { display:flex;align-items:center;justify-content:space-between;gap:var(--fu-space-2);min-width:0; }
+.fu-task-list__heading h2 { margin:0;font-size:var(--fu-font-md);overflow-wrap:anywhere; }
+.fu-task-list__count,.fu-task-group__count {font-size:var(--fu-font-sm);color:var(--fu-text-muted);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.fu-task-list__toggle,.fu-task-group__toggle { display:flex;align-items:center;justify-content:space-between;gap:var(--fu-space-2);width:100%;min-height:var(--fu-target-min);padding:var(--fu-space-2) 0;border:0;background:transparent;color:var(--fu-text);font:inherit;text-align:left;cursor:pointer; }
+.fu-task-list__toggle h2 { flex:1; }
+.fu-task-list__toggle svg,.fu-task-group__toggle svg {width:20px;height:20px;flex:none;transition:transform 180ms var(--fu-ease);}
+:is(.fu-task-list__toggle,.fu-task-group__toggle)[aria-expanded="true"] svg {transform:rotate(180deg);}
+.fu-task-list__body,.fu-task-group__body {display:grid;gap:var(--fu-space-2);min-width:0;}
+:is(.fu-task-list__body,.fu-task-group__body,.fu-task-item__body)[hidden] {display:none;}
+.fu-task-list__items,.fu-task-group__items {list-style:none;padding:0;margin:0;min-width:0;}
+.fu-task-list__items > li,.fu-task-group__items > li {border-bottom:1px solid var(--fu-divider,var(--fu-border));min-width:0;}
+.fu-task-list__items > li:last-child,.fu-task-group__items > li:last-child {border-bottom:0;}
+.fu-task-item__trigger,.fu-task-item__information {display:flex;align-items:center;gap:var(--fu-space-3);width:100%;box-sizing:border-box;min-height:var(--fu-target-min);padding:var(--fu-space-3) var(--fu-space-2);border:0;border-radius:var(--fu-radius-control);background:transparent;color:var(--fu-text);font:inherit;text-align:left;min-width:0;}
+.fu-task-item__trigger {cursor:pointer;}
+.fu-task-item__trigger:hover:not(:disabled) {background:var(--fu-surface-hover);}
+.fu-task-item__trigger:active:not(:disabled) {background:var(--fu-surface-selected);}
+.fu-task-item__trigger:disabled {opacity:.55;cursor:not-allowed;}
+.fu-task-item__media {display:grid;place-items:center;flex:none;width:28px;height:28px;color:var(--fu-text-muted);}
+.fu-task-item__media svg {width:22px;height:22px;}
+.fu-task-item__content {flex:1 1 0;display:grid;gap:var(--fu-space-1);min-width:0;}
+.fu-task-item__title {font-weight:var(--fu-weight-semibold);overflow-wrap:anywhere;}
+.fu-task-item__meta {color:var(--fu-text-muted);font-size:var(--fu-font-sm);overflow-wrap:anywhere;}
+.fu-task-item__status {font-size:var(--fu-font-sm);color:var(--fu-text-muted);max-width:35%;overflow-wrap:anywhere;}
+.fu-task-item__indicator {flex:none;display:grid;place-items:center;width:20px;height:20px;}
+.fu-task-item__indicator svg {width:20px;height:20px;transition:transform 180ms var(--fu-ease);}
+.fu-task-item__trigger[aria-expanded="true"] .fu-task-item__indicator svg {transform:rotate(180deg);}
+.fu-task-item[data-state="blocked"] .fu-task-item__status,.fu-task-item[data-state="error"] .fu-task-item__status {color:var(--fu-danger);}
+.fu-task-item[data-state="urgent"] .fu-task-item__status {color:var(--fu-warning);}
+.fu-task-item__body {padding:var(--fu-space-2) var(--fu-space-3) var(--fu-space-4) calc(28px + 2 * var(--fu-space-3));min-width:0;}
+.fu-task-item__body > * {max-width:100%;}
+.fu-task-item__body .fu-field {min-width:0;}
+.fu-task-item__body .fu-field__control {max-width:100%;}
+.fu-task-group {display:grid;gap:var(--fu-space-1);min-width:0;}
+.fu-task-group__heading {display:flex;align-items:center;gap:var(--fu-space-2);justify-content:space-between;min-width:0;font-size:var(--fu-font-sm);font-weight:var(--fu-weight-semibold);}
+.fu-task-group__heading h3,.fu-task-group__heading h4 {margin:0;font:inherit;overflow-wrap:anywhere;}
+.fu-task-group__body {padding-inline-start:var(--fu-space-2);}
+.fu-task-group .fu-task-group .fu-task-group__body {padding-inline-start:0;}
+.fu-task-list__state {padding:var(--fu-space-3);color:var(--fu-text-muted);font-size:var(--fu-font-sm);}
+.fu-task-list__state[role="alert"] {color:var(--fu-danger);}
+.fu-task-item__trigger:focus-visible,.fu-task-list__toggle:focus-visible,.fu-task-group__toggle:focus-visible {outline:3px solid var(--fu-focus);outline-offset:2px;}
+@media(max-width:420px){.fu-task-item__trigger,.fu-task-item__information {gap:var(--fu-space-2);}.fu-task-item__status {max-width:28%;}.fu-task-item__body {padding-left:var(--fu-space-3);}}
+@media(prefers-reduced-motion:reduce){.fu-task-item__indicator svg,.fu-task-list__toggle svg,.fu-task-group__toggle svg {transition:none;}}
