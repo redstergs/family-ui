@@ -112,3 +112,7 @@ Opt-in: import `bindNavigationOverflow` from `./src/navigation`. Pass the naviga
 ## MetricGroup (EP5G2)
 
 Generic metric groups, primary and secondary values, units and visible states. See [metric contracts](docs/metrics.md).
+
+## Unified To-dos (upcoming)
+
+Compact task lists, keyed inline editors, grouped task rows, neutral statuses and interactive examples. See [task contracts](docs/tasks.md). This additive feature is available on the task-component feature branch until separately released.
