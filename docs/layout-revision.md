@@ -28,3 +28,9 @@ Run `npm test`, `npm run check`, `npm run build`. Inspect 320/390/768/1280px and
 Use typography and spacing for hierarchy. Prioritize content over empty administrative blocks. Separate titles and metadata. Avoid redundant navigation buttons and excessive framing. Make interaction targets visible in their resting state. Images are optional. Reflow rather than shrink layouts; use contained scrolling for genuinely wide tables. Test both modes and all themes. No live data or application logic in the showcase.
 
 Phase 2 adds static contract tests; browser interaction and accessibility validation remain required. Existing selectors are retained and consumers are not automatically migrated.
+
+## Secondary navigation and compact tasks (next release, opt-in)
+
+Use `nav.fu-sub-navigation` with an accessible label and native buttons or links of class `fu-sub-navigation__item`. For buttons that switch views, update `aria-pressed` on every selection; for navigation links use `aria-current="page"`. The application owns selection, routing and panel visibility. The strip scrolls horizontally when necessary; it must not expand the page. Keyboard focus is visible. Do not use tab roles unless the application implements the complete tab keyboard contract.
+
+For compact task lists add `fu-task-list--compact` to the existing unified list. Use the existing disclosure binder; keep unique IDs, native controls and keyed reconciliation. Empty/loading/error semantics remain consumer-owned.

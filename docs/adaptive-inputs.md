@@ -16,3 +16,11 @@ Import selectionControls and bindSelectionControls from @redstergs/family-ui/sel
 
 ## Integration
 Opt into each feature individually; existing applications can retain fixed steps and legacy controls. Test thresholds in both directions, direct decimal input, unit changes, time carry, bounds, disabled controls, keyboard and touch, and actual persistence separately. See interactive catalog “Eingaben & aufklappbare Inhalte” and “Tabellen & Zeitraum”.
+
+## Compact PeriodNavigator
+Import `createPeriodNavigator(kind)` and `periodLabel(kind, first, last)` from `/period`. The factory returns live native controls for consumer wiring. Calendar opens a native date field and attempts the browser picker; if unavailable the field remains usable. Month selection accepts any date in the month, normalized by the consumer. Current-period button is hidden by the consumer when already current. No wheel navigation, auto-repeat or domain date arithmetic. Set bounds and disabled states in the application. Use NumberInput / QuantityInput / DurationInput for numeric values, not a page-specific wheel.
+
+## Standalone dates, times, and optional numbers
+Use `createTemporalInput({kind:"date"|"time", label, value, min, max, required, disabled, step})` from `/period` for native form controls. Supply a visible label in the surrounding form. Native OS picker appearance can vary; ISO values, bounds and application validation are unchanged. NumberInput accepts `value:null` for a genuinely empty initial field and `allowEmpty:true` for an optional field. `numberValue` still returns null for blank or invalid values; consumers must distinguish blank from invalid before saving optional values. Do not infer a measurement from an empty field.
+
+Use `fu-scroll-region` for intentionally constrained vertical or two-axis workspaces; `fu-scroll-region--horizontal` for horizontal-only strips where clipping is intentional. The page itself remains the default scroll area. Keep table/workspace primitives, and do not add nested scroll containers to ordinary cards.
