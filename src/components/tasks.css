@@ -42,3 +42,12 @@
 .fu-task-item__trigger:focus-visible,.fu-task-list__toggle:focus-visible,.fu-task-group__toggle:focus-visible {outline:3px solid var(--fu-focus);outline-offset:2px;}
 @media(max-width:420px){.fu-task-item__trigger,.fu-task-item__information {gap:var(--fu-space-2);}.fu-task-item__status {max-width:28%;}.fu-task-item__body {padding-left:var(--fu-space-3);}}
 @media(prefers-reduced-motion:reduce){.fu-task-item__indicator svg,.fu-task-list__toggle svg,.fu-task-group__toggle svg {transition:none;}}
+
+/* Compact is opt-in; the existing task row and form contracts remain intact. */
+.fu-task-list--compact {padding:var(--fu-space-2) var(--fu-space-3);gap:var(--fu-space-1);}
+.fu-task-list--compact .fu-task-list__toggle {padding-block:0;justify-content:flex-start;font-weight:var(--fu-weight-semibold);}
+.fu-task-list--compact .fu-task-list__toggle > svg:last-child {margin-inline-start:auto;}
+.fu-task-list--compact :is(.fu-task-item__trigger,.fu-task-item__information) {padding-block:var(--fu-space-1);}
+.fu-task-list--compact .fu-task-list__state {padding:var(--fu-space-1) 0;margin:0;}
+.fu-task-list--compact .fu-task-list__state:empty {display:none;}
+.fu-task-list--compact .fu-task-list__body {gap:var(--fu-space-1);}
