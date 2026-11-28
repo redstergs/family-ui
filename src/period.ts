@@ -1,4 +1,12 @@
 import {familyIcon} from "./icons";
+export interface TemporalInputProps {kind:"date"|"time";label?:string;value?:string;min?:string;max?:string;required?:boolean;disabled?:boolean;step?:number}
+/** Native editable date/time control: values remain ISO date or HH:mm strings. */
+export function createTemporalInput(p:TemporalInputProps):HTMLInputElement {
+ const input=document.createElement("input");input.type=p.kind;input.className="fu-field__control fu-temporal-input";
+ if(p.label)input.setAttribute("aria-label",p.label);input.value=p.value??"";
+ if(p.min!==undefined)input.min=p.min;if(p.max!==undefined)input.max=p.max;if(p.step!==undefined)input.step=String(p.step);
+ input.required=!!p.required;input.disabled=!!p.disabled;return input;
+}
 export type PeriodKind="day"|"week"|"month";
 const labels={day:["Vorheriger Tag","Nächster Tag","Datum wählen","Heute"],week:["Vorherige Woche","Nächste Woche","Woche wählen","Aktuelle Woche"],month:["Vorheriger Monat","Nächster Monat","Monat wählen (Datum im Monat)","Aktueller Monat"]} as const;
 export function periodLabel(kind:PeriodKind,first:string,last=first,locale="de-AT"):string{
@@ -16,10 +24,10 @@ export function createPeriodNavigator(kind:PeriodKind){
  current.textContent=kind==="day"?"Heute":"Aktuell";
  const label=document.createElement("strong");label.className="fu-period-navigator__label";label.setAttribute("aria-live","polite");
  const extras=document.createElement("div");extras.className="fu-period-navigator__extras";
- const date=document.createElement("input");date.type="date";date.className="fu-field__control fu-date-input";date.setAttribute("aria-label",dateLabel);date.hidden=true;calendar.setAttribute("aria-expanded","false");
+ const date=createTemporalInput({kind:"date",label:dateLabel});date.hidden=true;calendar.setAttribute("aria-expanded","false");
  calendar.onclick=()=>{if(!date.hidden){date.hidden=true;calendar.setAttribute("aria-expanded","false");return;}date.hidden=false;calendar.setAttribute("aria-expanded","true");date.focus();try{date.showPicker?.();}catch{/* Native text/date field remains available. */}};
  date.addEventListener("keydown",e=>{if(e.key==="Escape"){date.hidden=true;calendar.setAttribute("aria-expanded","false");calendar.focus();}});
  date.addEventListener("change",()=>{if(date.value){date.hidden=true;calendar.setAttribute("aria-expanded","false");calendar.focus();}});
- extras.append(calendar,current,date);root.append(previous,label,next,extras);
+ for(const child of [calendar,current,date])extras.appendChild(child);for(const child of [previous,label,next,extras])root.appendChild(child);
  return {root,previous,next,label,date,current,extras,calendar};
 }

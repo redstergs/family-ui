@@ -112,4 +112,9 @@
 .fu-period-navigator--compact .fu-period-navigator__step {width:auto;flex:none;display:inline-flex;align-items:center;justify-content:center;}
 .fu-period-navigator--compact .fu-period-navigator__step svg {width:20px;height:20px;}
 .fu-period-navigator--compact [hidden] {display:none;}
-.fu-date-input {font-variant-numeric:tabular-nums;min-width:0;max-width:100%;}
+.fu-temporal-input {font-variant-numeric:tabular-nums;min-width:0;max-width:100%;}
+
+/* Scroll only when a view deliberately defines a constrained region. */
+.fu-scroll-region {min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--fu-border-strong,var(--fu-border)) transparent;}
+.fu-scroll-region--horizontal {overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;}
+.fu-scroll-region:focus-visible {outline:2px solid var(--fu-focus);outline-offset:-2px;}
