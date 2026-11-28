@@ -21,7 +21,8 @@
     "./inputs": "./src/inputs.ts",
     "./selection": "./src/selection.ts",
     "./navigation": "./src/navigation.ts",
-    "./tasks": "./src/tasks.ts"
+    "./tasks": "./src/tasks.ts",
+    "./period": "./src/period.ts"
   },
   "devDependencies": {
     "typescript": "^5.7.3",
